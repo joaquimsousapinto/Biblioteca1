@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="4d38be1fc1fc4b8d953cb4336884cb87" Name="Diagram1" ZoomLevel="100">
+        <EntityTypeShape EntityType="Biblioteca1Model.Autor" Width="1.5" PointX="8" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="Biblioteca1Model.Categoria" Width="1.5" PointX="0.75" PointY="2.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Biblioteca1Model.Editora" Width="1.5" PointX="0.75" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Biblioteca1Model.EmprestimoLivro" Width="1.5" PointX="5.625" PointY="3.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Biblioteca1Model.Livro" Width="1.5" PointX="3.25" PointY="0.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="Biblioteca1Model.LivroAutor" Width="1.5" PointX="5.625" PointY="1" IsExpanded="true" />
+        <AssociationConnector Association="Biblioteca1Model.FK_LivroAutor_Autor" ManuallyRouted="false" />
+        <AssociationConnector Association="Biblioteca1Model.FK_Livro_Editora" ManuallyRouted="false" />
+        <AssociationConnector Association="Biblioteca1Model.FK_EmprestimoLivro_Livro" ManuallyRouted="false" />
+        <AssociationConnector Association="Biblioteca1Model.FK_LivroAutor_Livro" ManuallyRouted="false" />
+        <AssociationConnector Association="Biblioteca1Model.LivroCategoria" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="Biblioteca1Model.EmprestimoEstado" Width="1.5" PointX="5.625" PointY="5.25" />
+        <EntityTypeShape EntityType="Biblioteca1Model.Utilizador" Width="1.5" PointX="10.25" PointY="3.25" />
+        <EntityTypeShape EntityType="Biblioteca1Model.Emprestimo" Width="1.5" PointX="8" PointY="3.25" />
+        <AssociationConnector Association="Biblioteca1Model.FK_Emprestimo_Utilizador" />
+        <AssociationConnector Association="Biblioteca1Model.FK_EmprestimoEstado" />
+        <AssociationConnector Association="Biblioteca1Model.FK_EmprestimoLivro_Emprestimo" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
