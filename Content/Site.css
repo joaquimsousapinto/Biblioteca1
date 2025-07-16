@@ -1,20 +1,13 @@
-﻿/* Set padding to keep content from hitting the edges */
-.body-content {
-    margin-top: 15px;
-    padding-left: 15px;
-    padding-right: 15px;
-}
+﻿body { font-family: 'Open Sans', Tahoma, Geneva, Verdana, sans-serif; }
+textarea.form-control { min-height: 120px; }
+span.field-validation-error::before { content: "→ "; }
+span.field-validation-error { font-size: 0.8rem; }
 
-/* Override the default bootstrap behavior where horizontal description lists 
-   will truncate terms that are too long to fit in the left column 
-*/
-.dl-horizontal dt {
-    white-space: normal;
-}
-
-/* Set width on the form input elements since they're 100% wide by default */
-input,
-select,
-textarea {
-    max-width: 280px;
-}
+/* button default
+---------------------------- */
+.btn-default { color: #333; background-color: #f8f9fa; border-color: #ccc; background-image: linear-gradient(to bottom,#fff 0,#e0e0e0 100%); background-repeat: repeat-x; }
+    .btn-default:focus { color: #333; background-color: #e6e6e6; border-color: #8c8c8c; }
+    .btn-default:active, .btn-default:hover { color: #333; background-color: #e6e6e6; border-color: #adadad; }
+/* button-xs
+---------------------------- */
+.btn-xs { padding: 1px 5px; font-size: 12px; line-height: 1.5; border-radius: 3px; min-width: 24px; }

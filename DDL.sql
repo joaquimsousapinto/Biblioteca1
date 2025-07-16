@@ -1,3 +1,10 @@
+CREATE DATABASE Biblioteca1
+COLLATE Latin1_General_100_CI_AI;
+GO
+
+USE Biblioteca1
+GO
+
 CREATE TABLE Editora (
     Id INT PRIMARY KEY,
     -- Outras colunas da tabela Editora
@@ -59,7 +66,7 @@ CREATE TABLE EmprestimoEstado       -- (Dicionário de termos para Emprestomo(St
 (
     Id INT PRIMARY KEY IDENTITY,    -- (PK)
     -- Outras colunas da tabela Categoria
-    Nome VARCHAR(255) NOT NULL,     -- (Ativo, Concluído, Atrasado)
+    Nome VARCHAR(256) NOT NULL,     -- (Ativo, Concluído, Atrasado)
 );
 GO
 

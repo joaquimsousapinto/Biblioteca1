@@ -98,18 +98,6 @@
           <Property Name="DataNascimento" Type="date" />
           <Property Name="Sexo" Type="char" MaxLength="1" Nullable="false" />
         </EntityType>
-        <Association Name="FK_Emprestimo_Utilizador">
-          <End Role="Utilizador" Type="Self.Utilizador" Multiplicity="1" />
-          <End Role="Emprestimo" Type="Self.Emprestimo" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Utilizador">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="Emprestimo">
-              <PropertyRef Name="UtilizadorId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_EmprestimoEstado">
           <End Role="EmprestimoEstado" Type="Self.EmprestimoEstado" Multiplicity="1" />
           <End Role="Emprestimo" Type="Self.Emprestimo" Multiplicity="*" />
@@ -206,6 +194,9 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Function Name="Utilizadores_Sexo_FaixaEtaria" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ExecutionTime" Type="int" Mode="InOut" />
+        </Function>
         <EntityContainer Name="Biblioteca1ModelStoreContainer">
           <EntitySet Name="Autor" EntityType="Self.Autor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Categoria" EntityType="Self.Categoria" Schema="dbo" store:Type="Tables" />
@@ -217,10 +208,6 @@
           <EntitySet Name="LivroAutor" EntityType="Self.LivroAutor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LivroCategoria" EntityType="Self.LivroCategoria" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Utilizador" EntityType="Self.Utilizador" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_Emprestimo_Utilizador" Association="Self.FK_Emprestimo_Utilizador">
-            <End Role="Utilizador" EntitySet="Utilizador" />
-            <End Role="Emprestimo" EntitySet="Emprestimo" />
-          </AssociationSet>
           <AssociationSet Name="FK_EmprestimoEstado" Association="Self.FK_EmprestimoEstado">
             <End Role="EmprestimoEstado" EntitySet="EmprestimoEstado" />
             <End Role="Emprestimo" EntitySet="Emprestimo" />
@@ -418,6 +405,9 @@
             <End Role="Emprestimo" EntitySet="Emprestimoes" />
             <End Role="EmprestimoLivro" EntitySet="EmprestimoLivroes" />
           </AssociationSet>
+          <FunctionImport Name="Utilizadores_Sexo_FaixaEtaria" ReturnType="Collection(Biblioteca1Model.Utilizadores_Sexo_FaixaEtaria_Result)">
+            <Parameter Name="ExecutionTime" Mode="InOut" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="EmprestimoEstado">
           <Key>
@@ -490,6 +480,11 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <ComplexType Name="Utilizadores_Sexo_FaixaEtaria_Result">
+          <Property Type="String" Name="Sexo" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="FaixaEtaria" Nullable="false" MaxLength="5" />
+          <Property Type="Int32" Name="Total" Nullable="true" />
+        </ComplexType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -596,6 +591,15 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="Utilizadores_Sexo_FaixaEtaria" FunctionName="Biblioteca1Model.Store.Utilizadores_Sexo_FaixaEtaria">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Biblioteca1Model.Utilizadores_Sexo_FaixaEtaria_Result">
+                <ScalarProperty Name="Sexo" ColumnName="Sexo" />
+                <ScalarProperty Name="FaixaEtaria" ColumnName="FaixaEtaria" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>

@@ -1,3 +1,7 @@
+USE Biblioteca1
+GO
+-----------------------------------------------------------------
+
 INSERT INTO Editora (Id, Nome, Morada) VALUES
 (1, 'Livros & Cia', 'Rua das Letras, 123, Lisboa, Portugal'),
 (2, 'Editora Literária', 'Avenida dos Escritores, 45, Porto, Portugal'),

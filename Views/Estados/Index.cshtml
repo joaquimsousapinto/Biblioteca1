@@ -1,33 +1,26 @@
 ﻿@model IEnumerable<Biblioteca1.Models.EmprestimoEstado>
-
 @{
-    ViewBag.Title = "Estados - Index";
+    ViewBag.Title = "Lista de Estados dos Livros";
 }
 <div class="border-bottom mt-4 mb-2">
-    <h2>@ViewBag.Title</h2>
+    <h2><i class="fa fa-bookmark-o text-danger"></i> @ViewBag.Title</h2>
 </div>
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
+<p><a href="@Url.Action("Create")" class="btn btn-sm btn-default"><i class="fa fa-plus"></i></a></p>
+<table class="table table-striped table-sm align-middle">
     <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Nome)
-        </th>
+        <th>@Html.DisplayNameFor(model => model.Nome)</th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Nome)
-        </td>
-        <td class="text-end">
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
-        </td>
-    </tr>
-}
-
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@Html.DisplayFor(modelItem => item.Nome)</td>
+            <td class="text-end">
+                <a class="btn btn-sm btn-default" href="@Url.Action("Edit", new { id = item.Id })"><i class="fa fa-pencil"></i></a>
+                <a class="btn btn-sm btn-default" href="@Url.Action("Details", new { id = item.Id })"><i class="fa fa-eye"></i></a>
+                <a class="btn btn-sm btn-default" href="@Url.Action("Delete", new { id = item.Id })"><i class="fa fa-trash-o"></i></a>
+            </td>
+        </tr>
+    }
 </table>

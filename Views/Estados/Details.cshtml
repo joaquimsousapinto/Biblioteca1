@@ -1,26 +1,15 @@
 ﻿@model Biblioteca1.Models.EmprestimoEstado
-
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "Estado do Empréstimo - Detalhes";
 }
-
-<h2>Details</h2>
-
-<div>
-    <h4>EmprestimoEstado</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Nome)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Nome)
-        </dd>
-
-    </dl>
+<div class="border-bottom mt-4 mb-2">
+    <h2><i class="fa fa-bookmark-o text-danger"></i> @ViewBag.Title</h2>
 </div>
+<dl>
+    <dt> @Html.DisplayNameFor(model => model.Nome) </dt>
+    <dd> @Html.DisplayFor(model => model.Nome) </dd>
+</dl>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+    <a href="@Url.Action("Edit", new { id = Model.Id })" class="btn btn-primary btn-sm" title="Editar"><i class="fa fa-pencil"></i> <small>Editar</small></a>
+    <a href="@Url.Action("Index")" class="btn btn-default btn-sm" title="Voltar à Lista"><i class="fa fa-list"></i> <small>Voltar à Lista</small></a>
 </p>

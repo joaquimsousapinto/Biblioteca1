@@ -12,6 +12,8 @@ namespace Biblioteca1.Models
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
+    using System.Data.Entity.Core.Objects;
+    using System.Linq;
     
     public partial class Biblioteca1Entities : DbContext
     {
@@ -34,5 +36,10 @@ namespace Biblioteca1.Models
         public virtual DbSet<EmprestimoEstado> EmprestimoEstadoes { get; set; }
         public virtual DbSet<Utilizador> Utilizadors { get; set; }
         public virtual DbSet<Emprestimo> Emprestimoes { get; set; }
+    
+        public virtual ObjectResult<Utilizadores_Sexo_FaixaEtaria_Result> Utilizadores_Sexo_FaixaEtaria(ObjectParameter executionTime)
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Utilizadores_Sexo_FaixaEtaria_Result>("Utilizadores_Sexo_FaixaEtaria", executionTime);
+        }
     }
 }
