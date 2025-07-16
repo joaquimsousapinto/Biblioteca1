@@ -1,0 +1,29 @@
+﻿@model Biblioteca1.Models.Utilizador
+@{
+    ViewBag.Title = "Utilizador - Apagar";
+}
+<div class="border-bottom mt-4 mb-2">
+    <h2><i class="fa fa-bookmark-o text-danger"></i> @ViewBag.Title</h2>
+</div>
+<dl>
+    <dt>@Html.DisplayNameFor(model => model.Nome)</dt>
+    <dd>@Html.DisplayFor(model => model.Nome)</dd>
+    <dt>@Html.DisplayNameFor(model => model.Morada)</dt>
+    <dd>@Html.DisplayFor(model => model.Morada)</dd>
+    <dt>@Html.DisplayNameFor(model => model.Telefone)</dt>
+    <dd>@Html.DisplayFor(model => model.Telefone)</dd>
+    <dt>@Html.DisplayNameFor(model => model.Email)</dt>
+    <dd>@Html.DisplayFor(model => model.Email)</dd>
+    <dt>@Html.DisplayNameFor(model => model.DataNascimento)</dt>
+    <dd>@Html.DisplayFor(model => model.DataNascimento)</dd>
+    <dt>@Html.DisplayNameFor(model => model.Sexo)</dt>
+    <dd>@Html.DisplayFor(model => model.Sexo)</dd>
+</dl>
+<h4 class="text-danger">Tem a certeza que pretende apagar este registo?</h4>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(model => model.Id)
+    <button type="submit" value="Delete" class="btn btn-danger btn-sm" title="Apagar"><i class="fa fa-trash-o"></i> <small>Apagar</small></button>
+    <a href="@Url.Action("Index")" class="btn btn-default btn-sm" title="Voltar à Lista"><i class="fa fa-list"></i> <small>Voltar à Lista</small></a>
+}
