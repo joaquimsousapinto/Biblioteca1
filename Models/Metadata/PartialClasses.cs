@@ -9,6 +9,10 @@ namespace Biblioteca1.Models
     public partial class Categoria
     { }
 
+    [MetadataType(typeof(MetadataEditora))]
+    public partial class Editora
+    { }
+
     [MetadataType(typeof(MetadataEmprestimoEstado))]
     public partial class EmprestimoEstado
     { }

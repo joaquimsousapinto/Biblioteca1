@@ -24,7 +24,15 @@
             <td class="text-end">
                 <a class="btn btn-sm btn-default" href="@Url.Action("Edit", new { id = item.Id })"><i class="fa fa-pencil"></i></a>
                 <a class="btn btn-sm btn-default" href="@Url.Action("Details", new { id = item.Id })"><i class="fa fa-eye"></i></a>
-                <a class="btn btn-sm btn-default" href="@Url.Action("Delete", new { id = item.Id })"><i class="fa fa-trash-o"></i></a>
+                @if (item.Livroes.Count > 0)
+                {
+                    <a class="btn btn-sm btn-default" href="@Url.Action("Delete", new { id = item.Id })"><i class="fa fa-trash-o"></i></a>
+                }
+                else
+                {
+                    <span class="btn btn-sm btn-default" title="Categoria associada com livros.&#10;Não pode ser apagada."><i class="fa fa-times text-danger"></i></span>
+                }
+
             </td>
         </tr>
     }

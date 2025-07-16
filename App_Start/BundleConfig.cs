@@ -1,5 +1,4 @@
-﻿using System.Web;
-using System.Web.Optimization;
+﻿using System.Web.Optimization;
 
 namespace Biblioteca1
 {
@@ -24,6 +23,7 @@ namespace Biblioteca1
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                 "~/Content/bootstrap.css",
+                "~/Content/PagedList.css",
                 "~/Content/site.css")
                 .Include("~/Content/font-awesome.css", new CssRewriteUrlTransform()));
 
