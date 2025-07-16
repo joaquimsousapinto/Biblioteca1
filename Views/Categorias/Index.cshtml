@@ -1,6 +1,6 @@
-﻿@model IEnumerable<Biblioteca1.Models.EmprestimoEstado>
+﻿@model IEnumerable<Biblioteca1.Models.Categoria>
 @{
-    ViewBag.Title = "Lista de Estados dos Livros";
+    ViewBag.Title = "Categorias dos Livros";
 }
 <div class="border-bottom mt-4 mb-2">
     <h2><i class="fa fa-bookmark-o text-danger"></i> @ViewBag.Title</h2>
@@ -10,6 +10,8 @@
     <thead>
         <tr>
             <th>@Html.DisplayNameFor(model => model.Nome)</th>
+            <th>@Html.DisplayNameFor(model => model.Descricao)</th>
+            <th class="text-center">@Html.DisplayNameFor(model => model.Livroes)</th>
             <th></th>
         </tr>
     </thead>
@@ -17,6 +19,8 @@
     {
         <tr>
             <td>@Html.DisplayFor(modelItem => item.Nome)</td>
+            <td>@Html.DisplayFor(modelItem => item.Descricao)</td>
+            <td class="text-center">@Html.DisplayFor(modelItem => item.Livroes.Count)</td>
             <td class="text-end">
                 <a class="btn btn-sm btn-default" href="@Url.Action("Edit", new { id = item.Id })"><i class="fa fa-pencil"></i></a>
                 <a class="btn btn-sm btn-default" href="@Url.Action("Details", new { id = item.Id })"><i class="fa fa-eye"></i></a>

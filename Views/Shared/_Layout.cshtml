@@ -10,15 +10,14 @@
     <title>@ViewBag.Title - Meu Aplicativo ASP.NET</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    @RenderSection("styles", required: false)
 </head>
 <body>
-    <nav class="navbar navbar-expand-md navbar-toggleable-md bg-light border-bottom">
-        <div class="container">
+    <nav class="navbar fixed-top navbar-expand-lg bg-body-tertiary border-bottom mb-3">
+        <div class="container-xxl container-fluid">
             <a href="@Url.Action("Index", "Home")" class="navbar-brand" title="Biblioteca ASP.NET Framework"><i class="fa fa-leaf text-danger"></i></a>
-            <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" title="Alternar a navegação" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse d-sm-inline-flex justify-content-between">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
+            <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                 <ul class="navbar-nav flex-grow-1">
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Tabelas Principais</a>
@@ -35,7 +34,7 @@
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Tabelas Autiliares</a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="#">Editoras</a></li>
-                            <li><a class="dropdown-item" href="#">Categorias</a></li>
+                            <li><a class="dropdown-item" href="@Url.Action("Index", "Categorias")">Categorias</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="@Url.Action("Index", "Estados")">Estados dos livros</a></li>
                         </ul>
@@ -58,16 +57,14 @@
     <div class="container body-content">
         @RenderBody()
     </div>
-    <div class="navbar navbar-default fixed-bottom bg-light border-top" role="navigation">
-        <div class="container">
-            <div class="navbar-text small">@DateTime.Now.Year - Biblioteca ASP.NET Framework</div>
+    <div class="navbar fixed-bottom bg-body-tertiary border-top" role="navigation">
+        <div class="container-xxl container-fluid">
+            <div class="navbar-text small">@DateTime.Now.Year - Biblioteca ASP.NET Framework | @BuildInfoHelper.GetBuildDate()</div>
             <div class="navbar-right navbar-text small hidden-sm"><a href="http://www.ua.pt" class="nav-link" target="_blank" title="Universidade de Aveiro">Universidade de Aveiro</a></div>
         </div>
     </div>
-
-
-    @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
+    @Scripts.Render("~/bundles/jquery")
     @RenderSection("scripts", required: false)
 </body>
 </html>

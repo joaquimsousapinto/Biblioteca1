@@ -1,13 +1,15 @@
-﻿@model Biblioteca1.Models.EmprestimoEstado
+﻿@model Biblioteca1.Models.Categoria
 @{
-    ViewBag.Title = "Estado do Empréstimo - Apagar";
+    ViewBag.Title = "Categoria - Apagar";
 }
 <div class="border-bottom mt-4 mb-2">
     <h2><i class="fa fa-bookmark-o text-danger"></i> @ViewBag.Title</h2>
 </div>
 <dl>
-    <dt>@Html.DisplayNameFor(model => model.Nome)</dt>
-    <dd>@Html.DisplayFor(model => model.Nome)</dd>
+    <dt> @Html.DisplayNameFor(model => model.Nome) </dt>
+    <dd> @Html.DisplayFor(model => model.Nome) </dd>
+    <dt> @Html.DisplayNameFor(model => model.Descricao) </dt>
+    <dd> @Html.DisplayFor(model => model.Descricao) </dd>
 </dl>
 <h4 class="text-danger">Tem a certeza que pretende apagar este registo?</h4>
 @using (Html.BeginForm())

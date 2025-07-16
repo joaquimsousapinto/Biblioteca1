@@ -1,0 +1,51 @@
+﻿﻿<div class="toast-container position-absolute bottom-0 end-0" style="margin-bottom: 60px;">
+    <div aria-role="status" aria-live="polite" aria-atomic="true" class="toast fade">
+        @if (TempData["Success"] != null)
+        {
+            string texto = TempData["Success"].ToString();
+            string id = TempData["Id"] != null ? TempData["Id"].ToString() : null;
+            string controller = TempData["Controller"] != null ? TempData["Controller"].ToString() : null;
+            int pos = texto.IndexOf("<br/>", 1);
+            string titulo = pos >= 0 ? texto.Substring(0, pos) : "Informação";
+
+            <div class="toast-header bg-success-subtle">
+                <i class="fa fa-square text-success"></i> &nbsp; <strong class="me-auto">@Html.Raw(titulo) </strong> <small class="text-muted">@DateTime.Now.ToShortTimeString()</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body small">
+                @Html.Raw((pos >= 0 ? texto.Substring(pos + 5) : texto))
+                @if (!string.IsNullOrEmpty(id))
+                {
+                    <div class="mt-2 pt-2 border-top">
+                        @if (!string.IsNullOrEmpty(controller))
+                        {<p><a class="btn btn-link btn-xs" href="@Url.Action("Details", @controller, new { id = @id})">[Ver]</a></p> }
+                        else
+                        { <p><a class="btn btn-link btn-xs" href="@Url.Action("Details", new { id = @id})">[Ver]</a></p>}
+                    </div>
+                }
+            </div>
+        }
+        @if (TempData["Fail"] != null)
+        {
+            string texto = TempData["Fail"].ToString();
+            int pos = texto.IndexOf("<br/>", 1);
+            string titulo = pos >= 0 ? texto.Substring(0, pos) : "Informação";
+            <div class="toast-header bg-danger-subtle">
+                <i class="fa fa-square text-danger"></i> &nbsp; <strong class="me-auto">@Html.Raw(titulo) </strong> <small class="text-muted">@DateTime.Now.ToShortTimeString()</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body small">@Html.Raw((pos >= 0 ? texto.Substring(pos + 5) : texto))</div>
+        }
+        @if (TempData["Info"] != null)
+        {
+            string texto = TempData["Info"].ToString();
+            int pos = texto.IndexOf("<br/>", 1);
+            string titulo = pos >= 0 ? texto.Substring(0, pos) : "Informação";
+            <div class="toast-header bg-info-subtle">
+                <i class="fa fa-square text-info"></i> &nbsp; <strong class="me-auto">@Html.Raw(titulo) </strong> <small class="text-muted">@DateTime.Now.ToShortTimeString()</small>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body small">@Html.Raw((pos >= 0 ? texto.Substring(pos + 5) : texto))</div>
+        }
+    </div>
+</div>

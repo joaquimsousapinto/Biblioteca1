@@ -198,6 +198,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="App_Code\BuildInfoHelper.cshtml" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\IdentityConfig.cs" />
@@ -205,6 +206,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CategoriasController.cs" />
     <Compile Include="Controllers\EstadosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -233,6 +235,7 @@
     <Compile Include="Models\Categoria.cs">
       <DependentUpon>Biblioteca1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Common\BuildInfo.cs" />
     <Compile Include="Models\Editora.cs">
       <DependentUpon>Biblioteca1.tt</DependentUpon>
     </Compile>
@@ -253,6 +256,7 @@
       <DependentUpon>Biblioteca1.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Metadata\MetadataCategoria.cs" />
     <Compile Include="Models\Metadata\MetadataEmprestimoEstado.cs" />
     <Compile Include="Models\Metadata\PartialClasses.cs" />
     <Compile Include="Models\Utilizador.cs">
@@ -367,6 +371,12 @@
     <Content Include="Views\Estados\Details.cshtml" />
     <Content Include="Views\Estados\Edit.cshtml" />
     <Content Include="Views\Estados\Index.cshtml" />
+    <Content Include="Views\Categorias\Create.cshtml" />
+    <Content Include="Views\Categorias\Delete.cshtml" />
+    <Content Include="Views\Categorias\Details.cshtml" />
+    <Content Include="Views\Categorias\Edit.cshtml" />
+    <Content Include="Views\Categorias\Index.cshtml" />
+    <Content Include="Views\Shared\_ToastStatus.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

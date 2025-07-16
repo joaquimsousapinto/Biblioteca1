@@ -1,7 +1,21 @@
-﻿body { font-family: 'Open Sans', Tahoma, Geneva, Verdana, sans-serif; }
-textarea.form-control { min-height: 120px; }
+﻿body { font-family: 'Open Sans', Tahoma, Geneva, Verdana, sans-serif; font-size: 0.75em; margin-top: 57px; margin-bottom: 57px; text-align: justify; }
+
+@media (min-width: 768px) { body { font-size: 0.8em; } }
+@media (min-width: 992px) { body { font-size: 0.8em; } }
+/*@media (min-width: 1200px) { body { font-size: 0.85em; } }*/
+@media (min-width: 1400px) { body { font-size: 0.85em; } }
+
+dt { font-weight: 300; font-size: 0.75rem; }
+.dropdown-item.active svg { color: var(--bs-body-bg)!important; }
+.row .form-floating label { margin-left: calc(var(--bs-gutter-x) * .25); }
+select, input, textarea, .dropdown-item { font-size: 0.9rem !important; }
+    input::-webkit-input-placeholder { font-size: 0.9rem; }
+a, a:hover, a:active, a:visited { text-decoration: none !important; }
+    a.dropdown-item { font-size: 0.9rem; }
+
 span.field-validation-error::before { content: "→ "; }
 span.field-validation-error { font-size: 0.8rem; }
+.form-control.text-box.multi-line { min-height: 120px; }
 
 /* button default
 ---------------------------- */

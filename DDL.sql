@@ -16,7 +16,7 @@ GO
 CREATE TABLE Categoria (
     Id INT PRIMARY KEY,
     -- Outras colunas da tabela Categoria
-    Nome VARCHAR(255) NOT NULL,
+    Nome VARCHAR(256) NOT NULL,
     Descricao VARCHAR(1024)
 );
 GO
@@ -34,7 +34,7 @@ GO
 
 CREATE TABLE Autor (
     Id INT PRIMARY KEY NOT NULL IDENTITY,
-    Nome VARCHAR(255) NOT NULL,
+    Nome VARCHAR(256) NOT NULL,
     Bibliografia VARCHAR(1024),
     DataNascimento DATE,
     DataMorte DATE,

@@ -5,8 +5,11 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Biblioteca1.Models
 {
+    [MetadataType(typeof(MetadataCategoria))]
+    public partial class Categoria
+    { }
+
     [MetadataType(typeof(MetadataEmprestimoEstado))]
     public partial class EmprestimoEstado
     { }
-
 }

@@ -7,118 +7,118 @@ using System.Web.Mvc;
 
 namespace Biblioteca1.Controllers
 {
-    public class EstadosController : Controller
+    public class CategoriasController : Controller
     {
         private readonly Biblioteca1Entities db = new Biblioteca1Entities();
 
-        // GET: Estados
+        // GET: Categorias
         public ActionResult Index()
         {
-            return View(db.EmprestimoEstadoes.ToList());
+            return View(db.Categorias.ToList());
         }
 
-        // GET: Estados/Details/5
+        // GET: Categorias/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            EmprestimoEstado emprestimoEstado = db.EmprestimoEstadoes.Find(id);
-            if (emprestimoEstado == null)
+            Categoria categoria = db.Categorias.Find(id);
+            if (categoria == null)
             {
                 return HttpNotFound();
             }
-            return View(emprestimoEstado);
+            return View(categoria);
         }
 
-        // GET: Estados/Create
+        // GET: Categorias/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Estados/Create
-        // Para proteger-se contra ataques de excesso de postagem, ative as propriedades específicas às quais deseja se associar. 
-        // Para obter mais detalhes, confira https://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Categorias/Create
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Nome")] EmprestimoEstado emprestimoEstado)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Nome,Descricao")] Categoria categoria)
         {
             if (ModelState.IsValid)
             {
-                db.EmprestimoEstadoes.Add(emprestimoEstado);
+                db.Categorias.Add(categoria);
                 await db.SaveChangesAsync();
                 TempData["Success"] = "Registo criado com sucesso.";
                 return RedirectToAction("Index");
             }
             TempData["Fail"] = "Erro na criação do Registo.";
-            return View(emprestimoEstado);
+            return View(categoria);
         }
 
-        // GET: Estados/Edit/5
+        // GET: Categorias/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            EmprestimoEstado emprestimoEstado = db.EmprestimoEstadoes.Find(id);
-            if (emprestimoEstado == null)
+            Categoria categoria = db.Categorias.Find(id);
+            if (categoria == null)
             {
                 return HttpNotFound();
             }
-            return View(emprestimoEstado);
+            return View(categoria);
         }
 
-        // POST: Estados/Edit/5
-        // Para proteger-se contra ataques de excesso de postagem, ative as propriedades específicas às quais deseja se associar. 
-        // Para obter mais detalhes, confira https://go.microsoft.com/fwlink/?LinkId=317598.
+        // POST: Categorias/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
+        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Nome")] EmprestimoEstado emprestimoEstado)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Nome,Descricao")] Categoria categoria)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(emprestimoEstado).State = EntityState.Modified;
+                db.Entry(categoria).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 TempData["Success"] = "Registo editado com sucesso.";
                 return RedirectToAction(nameof(Index));
             }
             TempData["Fail"] = "Erro na edição do registo.";
-            return View(emprestimoEstado);
+            return View(categoria);
         }
 
-        // GET: Estados/Delete/5
+        // GET: Categorias/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            EmprestimoEstado emprestimoEstado = db.EmprestimoEstadoes.Find(id);
-            if (emprestimoEstado == null)
+            Categoria categoria = db.Categorias.Find(id);
+            if (categoria == null)
             {
                 return HttpNotFound();
             }
-            return View(emprestimoEstado);
+            return View(categoria);
         }
 
-        // POST: Estados/Delete/5
+        // POST: Categorias/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            EmprestimoEstado emprestimoEstado = db.EmprestimoEstadoes.Find(id);
-            if (emprestimoEstado != null)
+            Categoria categoria = db.Categorias.Find(id);
+            if (categoria != null)
             {
-                db.EmprestimoEstadoes.Remove(emprestimoEstado);
+                db.Categorias.Remove(categoria);
                 await db.SaveChangesAsync();
                 TempData["Success"] = "Registo apagado com sucesso.";
                 return RedirectToAction(nameof(Index));
             }
             TempData["Fail"] = "Erro a apagar o registo.";
-            return RedirectToAction("Index");
+            return RedirectToAction(nameof(Index));
         }
     }
 }

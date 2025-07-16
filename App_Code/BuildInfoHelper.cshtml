@@ -1,0 +1,9 @@
+﻿@using System;
+@using System.IO;
+@using System.Reflection;
+
+@helper GetBuildDate()
+{
+    var assembly = Assembly.GetExecutingAssembly();
+    @File.GetLastWriteTime(assembly.Location).ToString("yyMMdd-HHmmss")
+}
