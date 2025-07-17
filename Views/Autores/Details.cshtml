@@ -19,3 +19,30 @@
     <a href="@Url.Action("Edit", new { id = Model.Id })" class="btn btn-primary btn-sm" title="Editar"><i class="fa fa-pencil"></i> <small>Editar</small></a>
     <a href="@Url.Action("Index")" class="btn btn-default btn-sm" title="Voltar à Lista"><i class="fa fa-list"></i> <small>Voltar à Lista</small></a>
 </p>
+@if (Model.LivroAutors.Count > 0)
+{
+    <div class="border-bottom mt-4 mb-2">
+        <h4><i class=" fa fa-book text-danger"></i> Lista de livros deste Autor (@Model.LivroAutors.Count)</h4>
+    </div>
+    <table class="table table-striped table-sm">
+        <thead>
+            <tr>
+                <th>@Html.DisplayNameFor(model => model.LivroAutors.FirstOrDefault().Livro.Titulo)</th>
+                <th></th>
+            </tr>
+        </thead>
+        @foreach (var item in Model.LivroAutors)
+        {
+            <tr>
+                <td>@item.Livro.Titulo</td>
+                <td class="text-end">
+                    <a href="@Url.Action("Details", "Livros", new {id = item.Livro.Id })" class="btn btn-default btn-xs"><i class="fa fa-eye"></i></a>
+                </td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <i class="fa fa-info-circle text-info">Não Há livros desta editora.</i>
+}
