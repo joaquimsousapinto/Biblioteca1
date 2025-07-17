@@ -16,7 +16,7 @@
 else
 {
     <ul class="navbar-nav navbar-right">
-        <li>@Html.ActionLink("Registre-se", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class="nav-link" })</li>
-        <li>@Html.ActionLink("Logon", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class="nav-link" })</li>
+        <li class="nav-item"><a class="nav-link" href="@Url.Action("Register", "Account", new { id = "registerLink" })" title="Registre-se"><i class="fa fa-user-plus"></i></a></li>
+        <li class="nav-item"><a class="nav-link" href="@Url.Action("Login", "Account",new { id = "loginLink" })" title="Login"><i class="fa fa-sign-in"></i></a></li>
     </ul>
 }

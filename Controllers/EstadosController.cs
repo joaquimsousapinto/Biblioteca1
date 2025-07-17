@@ -14,7 +14,7 @@ namespace Biblioteca1.Controllers
         // GET: Estados
         public ActionResult Index()
         {
-            return View(db.EmprestimoEstadoes.ToList());
+            return View(db.EmprestimoEstadoes.AsNoTracking().ToList());
         }
 
         // GET: Estados/Details/5
@@ -24,7 +24,7 @@ namespace Biblioteca1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            EmprestimoEstado emprestimoEstado = db.EmprestimoEstadoes.Find(id);
+            EmprestimoEstado emprestimoEstado = db.EmprestimoEstadoes.AsNoTracking().FirstOrDefault(x => x.Id == id);
             if (emprestimoEstado == null)
             {
                 return HttpNotFound();
@@ -63,7 +63,7 @@ namespace Biblioteca1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            EmprestimoEstado emprestimoEstado = db.EmprestimoEstadoes.Find(id);
+            EmprestimoEstado emprestimoEstado = db.EmprestimoEstadoes.AsNoTracking().FirstOrDefault(x => x.Id == id);
             if (emprestimoEstado == null)
             {
                 return HttpNotFound();
@@ -96,7 +96,7 @@ namespace Biblioteca1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            EmprestimoEstado emprestimoEstado = db.EmprestimoEstadoes.Find(id);
+            EmprestimoEstado emprestimoEstado = db.EmprestimoEstadoes.AsNoTracking().FirstOrDefault(x => x.Id == id);
             if (emprestimoEstado == null)
             {
                 return HttpNotFound();

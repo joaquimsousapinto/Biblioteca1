@@ -28,14 +28,14 @@ namespace Biblioteca1.Controllers
             IPagedList<Utilizador> retVal = null;
             if (!string.IsNullOrEmpty(q))
             {
-                retVal = db.Utilizadors
+                retVal = db.Utilizadors.AsNoTracking()
                     .Where(x => x.Nome.Contains(q))
                     .OrderBy(x => x.Nome)
                     .ToPagedList(pageNumber, pageSize);
             }
             else
             {
-                retVal = db.Utilizadors
+                retVal = db.Utilizadors.AsNoTracking()
                     .OrderBy(x => x.Nome)
                     .ToPagedList(pageNumber, pageSize);
             }
@@ -52,7 +52,7 @@ namespace Biblioteca1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Utilizador utilizador = db.Utilizadors.Find(id);
+            Utilizador utilizador = db.Utilizadors.AsNoTracking().FirstOrDefault(x => x.Id == id);
             if (utilizador == null)
             {
                 return HttpNotFound();
@@ -90,7 +90,7 @@ namespace Biblioteca1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Utilizador utilizador = db.Utilizadors.Find(id);
+            Utilizador utilizador = db.Utilizadors.AsNoTracking().FirstOrDefault(x => x.Id == id);
             if (utilizador == null)
             {
                 return HttpNotFound();
@@ -123,7 +123,7 @@ namespace Biblioteca1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Utilizador utilizador = db.Utilizadors.Find(id);
+            Utilizador utilizador = db.Utilizadors.AsNoTracking().FirstOrDefault(x => x.Id == id);
             if (utilizador == null)
             {
                 return HttpNotFound();

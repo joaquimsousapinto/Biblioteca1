@@ -14,7 +14,7 @@ namespace Biblioteca1.Controllers
         // GET: Categorias
         public ActionResult Index()
         {
-            return View(db.Categorias.ToList());
+            return View(db.Categorias.AsNoTracking().ToList());
         }
 
         // GET: Categorias/Details/5
@@ -24,7 +24,7 @@ namespace Biblioteca1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Categoria categoria = db.Categorias.Find(id);
+            Categoria categoria = db.Categorias.AsNoTracking().FirstOrDefault(x => x.Id == id);
             if (categoria == null)
             {
                 return HttpNotFound();
@@ -63,7 +63,7 @@ namespace Biblioteca1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Categoria categoria = db.Categorias.Find(id);
+            Categoria categoria = db.Categorias.AsNoTracking().FirstOrDefault(x => x.Id == id);
             if (categoria == null)
             {
                 return HttpNotFound();
@@ -96,7 +96,7 @@ namespace Biblioteca1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Categoria categoria = db.Categorias.Find(id);
+            Categoria categoria = db.Categorias.AsNoTracking().FirstOrDefault(x => x.Id == id);
             if (categoria == null)
             {
                 return HttpNotFound();

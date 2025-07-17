@@ -25,14 +25,14 @@ namespace Biblioteca1.Controllers
             IPagedList<Editora> retVal = null;
             if (!string.IsNullOrEmpty(q))
             {
-                retVal = db.Editoras
+                retVal = db.Editoras.AsNoTracking()
                     .Where(x => x.Nome.Contains(q))
                     .OrderBy(x => x.Nome)
                     .ToPagedList(pageNumber, pageSize);
             }
             else
             {
-                retVal = db.Editoras
+                retVal = db.Editoras.AsNoTracking()
                     .OrderBy(x => x.Nome)
                     .ToPagedList(pageNumber, pageSize);
             }
@@ -49,7 +49,7 @@ namespace Biblioteca1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Editora editora = db.Editoras.Find(id);
+            Editora editora = db.Editoras.AsNoTracking().FirstOrDefault(x => x.Id == id);
             if (editora == null)
             {
                 return HttpNotFound();
@@ -88,7 +88,7 @@ namespace Biblioteca1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Editora editora = db.Editoras.Find(id);
+            Editora editora = db.Editoras.AsNoTracking().FirstOrDefault(x => x.Id == id);
             if (editora == null)
             {
                 return HttpNotFound();
@@ -121,7 +121,7 @@ namespace Biblioteca1.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Editora editora = db.Editoras.Find(id);
+            Editora editora = db.Editoras.AsNoTracking().FirstOrDefault(x => x.Id == id);
             if (editora == null)
             {
                 return HttpNotFound();
