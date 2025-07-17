@@ -1,6 +1,6 @@
-﻿@model Biblioteca1.Models.Utilizador
+﻿@model Biblioteca1.Models.Autor
 @{
-    ViewBag.Title = "Utilizador - Apagar";
+    ViewBag.Title = "Autor - Apagar";
 }
 <div class="border-bottom mt-4 mb-2">
     <h2><i class="fa fa-user-o text-danger"></i> @ViewBag.Title</h2>
@@ -8,16 +8,12 @@
 <dl>
     <dt>@Html.DisplayNameFor(model => model.Nome)</dt>
     <dd>@Html.DisplayFor(model => model.Nome)</dd>
-    <dt>@Html.DisplayNameFor(model => model.Morada)</dt>
-    <dd>@Html.DisplayFor(model => model.Morada)</dd>
-    <dt>@Html.DisplayNameFor(model => model.Telefone)</dt>
-    <dd>@Html.DisplayFor(model => model.Telefone)</dd>
-    <dt>@Html.DisplayNameFor(model => model.Email)</dt>
-    <dd>@Html.DisplayFor(model => model.Email)</dd>
+    <dt>@Html.DisplayNameFor(model => model.Bibliografia)</dt>
+    <dd>@Html.DisplayFor(model => model.Bibliografia)</dd>
     <dt>@Html.DisplayNameFor(model => model.DataNascimento)</dt>
     <dd>@Html.DisplayFor(model => model.DataNascimento)</dd>
-    <dt>@Html.DisplayNameFor(model => model.Sexo)</dt>
-    <dd>@Html.DisplayFor(model => model.Sexo)</dd>
+    <dt>@Html.DisplayNameFor(model => model.DataMorte)</dt>
+    <dd>@Html.DisplayFor(model => model.DataMorte)</dd>
 </dl>
 <h4 class="text-danger">Tem a certeza que pretende apagar este registo?</h4>
 @using (Html.BeginForm())

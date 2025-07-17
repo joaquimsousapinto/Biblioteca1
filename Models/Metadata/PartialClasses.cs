@@ -5,6 +5,10 @@ using System.Diagnostics.CodeAnalysis;
 
 namespace Biblioteca1.Models
 {
+    [MetadataType(typeof(MetadataAutor))]
+    public partial class Autor
+    { }
+
     [MetadataType(typeof(MetadataCategoria))]
     public partial class Categoria
     { }

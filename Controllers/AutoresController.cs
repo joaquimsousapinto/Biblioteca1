@@ -1,7 +1,5 @@
 ﻿using Biblioteca1.Models;
 using PagedList;
-using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.Entity;
@@ -9,33 +7,32 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Biblioteca1.Controllers
 {
-    public class UtilizadoresController : Controller
+    public class AutoresController : Controller
     {
         private readonly Biblioteca1Entities db = new Biblioteca1Entities();
 
-        // GET: Utilizadores
+        // GET: autores
         public ActionResult Index(int? page, string q)
         {
             Stopwatch stopwatch = Stopwatch.StartNew();
 
             int pageSize = short.Parse(ConfigurationManager.AppSettings["ItemsPorPagina"]);
             int pageNumber = page ?? 1;
-            IPagedList<Utilizador> retVal = null;
+            IPagedList<Autor> retVal = null;
             if (!string.IsNullOrEmpty(q))
             {
-                retVal = db.Utilizadors.AsNoTracking()
+                retVal = db.Autors.AsNoTracking()
                     .Where(x => x.Nome.Contains(q))
                     .OrderBy(x => x.Nome)
                     .ToPagedList(pageNumber, pageSize);
             }
             else
             {
-                retVal = db.Utilizadors.AsNoTracking()
+                retVal = db.Autors.AsNoTracking()
                     .OrderBy(x => x.Nome)
                     .ToPagedList(pageNumber, pageSize);
             }
@@ -45,101 +42,101 @@ namespace Biblioteca1.Controllers
             return View(retVal);
         }
 
-        // GET: Utilizadores/Details/5
+        // GET: autores/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Utilizador utilizador = db.Utilizadors.AsNoTracking().FirstOrDefault(x => x.Id == id);
-            if (utilizador == null)
+            Autor autor = db.Autors.AsNoTracking().FirstOrDefault(x => x.Id == id);
+            if (autor == null)
             {
                 return HttpNotFound();
             }
-            return View(utilizador);
+            return View(autor);
         }
 
-        // GET: Utilizadores/Create
+        // GET: autores/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Utilizadores/Create
+        // POST: autores/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Nome,Morada,Telefone,Email,DataNascimento,Sexo")] Utilizador utilizador)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Nome,Morada,Telefone,Email,DataNascimento,Sexo")] Autor autor)
         {
             if (ModelState.IsValid)
             {
-                db.Utilizadors.Add(utilizador);
+                db.Autors.Add(autor);
                 await db.SaveChangesAsync();
                 TempData["Success"] = "Registo criado com sucesso.";
                 return RedirectToAction("Index");
             }
-            TempData["Fail"] = "Erro na criação do Registo."; return View(utilizador);
+            TempData["Fail"] = "Erro na criação do Registo."; return View(autor);
         }
 
-        // GET: Utilizadores/Edit/5
+        // GET: autores/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Utilizador utilizador = db.Utilizadors.AsNoTracking().FirstOrDefault(x => x.Id == id);
-            if (utilizador == null)
+            Autor autor = db.Autors.AsNoTracking().FirstOrDefault(x => x.Id == id);
+            if (autor == null)
             {
                 return HttpNotFound();
             }
-            return View(utilizador);
+            return View(autor);
         }
 
-        // POST: Utilizadores/Edit/5
+        // POST: autores/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Nome,Morada,Telefone,Email,DataNascimento,Sexo")] Utilizador utilizador)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Nome,Morada,Telefone,Email,DataNascimento,Sexo")] Autor autor)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(utilizador).State = EntityState.Modified;
+                db.Entry(autor).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 TempData["Success"] = "Registo editado com sucesso.";
                 return RedirectToAction(nameof(Index));
             }
             TempData["Fail"] = "Erro na edição do registo.";
-            return View(utilizador);
+            return View(autor);
         }
 
-        // GET: Utilizadores/Delete/5
+        // GET: autores/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Utilizador utilizador = db.Utilizadors.AsNoTracking().FirstOrDefault(x => x.Id == id);
-            if (utilizador == null)
+            Autor autor = db.Autors.AsNoTracking().FirstOrDefault(x => x.Id == id);
+            if (autor == null)
             {
                 return HttpNotFound();
             }
-            return View(utilizador);
+            return View(autor);
         }
 
-        // POST: Utilizadores/Delete/5
+        // POST: autores/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Utilizador utilizador = db.Utilizadors.Find(id);
-            if (utilizador != null)
+            Autor autor = db.Autors.Find(id);
+            if (autor != null)
             {
-                db.Utilizadors.Remove(utilizador);
+                db.Autors.Remove(autor);
                 await db.SaveChangesAsync();
                 TempData["Success"] = "Registo apagado com sucesso.";
                 return RedirectToAction(nameof(Index));
