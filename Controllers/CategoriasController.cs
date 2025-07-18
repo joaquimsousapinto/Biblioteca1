@@ -14,7 +14,7 @@ namespace Biblioteca1.Controllers
         // GET: Categorias
         public ActionResult Index()
         {
-            return View(db.Categorias.AsNoTracking().ToList());
+            return View(db.Categorias.AsNoTracking().OrderBy(x => x.Nome).ToList());
         }
 
         // GET: Categorias/Details/5
@@ -119,6 +119,34 @@ namespace Biblioteca1.Controllers
             }
             TempData["Fail"] = "Erro a apagar o registo.";
             return RedirectToAction(nameof(Index));
+        }
+
+        [ActionName("CreateOnLivro")]
+        public async Task<ActionResult> CreateOnLivro(int livroId, int categoriaId)
+        {
+            Categoria categoria = db.Categorias.Find(categoriaId);
+            Livro livro = db.Livroes.Find(livroId);
+            if (categoria != null && livro != null)
+            {
+                categoria.Livroes.Add(livro);
+                await db.SaveChangesAsync();
+                TempData["Success"] = "Registo criado com sucesso.";
+            }
+            return RedirectToAction(nameof(Details), "Livros", new { id = livroId });
+        }
+
+        [ActionName("DeleteOnLivro")]
+        public async Task<ActionResult> DeleteOnLivro(int livroId, int categoriaId)
+        {
+            Categoria categoria = db.Categorias.Find(categoriaId);
+            Livro livro = db.Livroes.Find(livroId);
+            if (categoria != null && livro != null)
+            {
+                categoria.Livroes.Remove(livro);
+                await db.SaveChangesAsync();
+                TempData["Success"] = "Registo apagado com sucesso.";
+            }
+            return RedirectToAction(nameof(Details), "Livros", new { id = livroId });
         }
     }
 }

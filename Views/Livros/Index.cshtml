@@ -1,15 +1,15 @@
-﻿@model PagedList.IPagedList<Biblioteca1.Models.Utilizador>
+﻿@model PagedList.IPagedList<Biblioteca1.Models.Livro>
 @using Biblioteca1.Models
 @using PagedList;
 @using PagedList.Mvc;
 @{
-    ViewData["Title"] = "Lista de Utilizadores";
+    ViewData["Title"] = "Lista de Livros";
     string q = @Request.QueryString["q"];
 }
 <div class="border-bottom pt-4 pb-2 mb-3">
     <div class="row">
         <div class="col-md-8">
-            <h2><i class="fa fa-user-o text-danger"></i> @ViewBag.Title</h2>
+            <h2><i class="fa fa-book text-danger"></i> @ViewBag.Title</h2>
         </div>
         <div class="col-md-4">
             <form>
@@ -48,36 +48,48 @@
     <table class="table table-striped table-sm align-middle">
         <thead>
             <tr>
-                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Nome)</th>
-                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().DataNascimento)</th>
-                <th>@Html.DisplayNameFor(model => model.FirstOrDefault().Email)</th>
-                <th class="text-center">@Html.DisplayNameFor(model => model.FirstOrDefault().Sexo)</th>
-                <th class="text-center">@Html.DisplayNameFor(model => model.FirstOrDefault().Emprestimoes)</th>
+                <th>@Html.DisplayNameFor(model => model.First().Titulo)</th>
+                <th>@Html.DisplayNameFor(model => model.First().AnoPublicacao)</th>
+                <th>@Html.DisplayNameFor(model => model.First().AnoEdicao)</th>
+                <th>@Html.DisplayNameFor(model => model.First().LivroAutors)</th>
+                <th>@Html.DisplayNameFor(model => model.First().Categorias)</th>
+                <th>@Html.DisplayNameFor(model => model.First().EditoraId)</th>
                 <th></th>
             </tr>
         </thead>
         @foreach (var item in Model)
         {
             <tr>
-                <td>@Html.DisplayFor(modelItem => item.Nome)</td>
-                <td>@Html.DisplayFor(modelItem => item.DataNascimento)</td>
-                <td>@Html.DisplayFor(modelItem => item.Email)</td>
-                <td class="text-center">@Html.DisplayFor(modelItem => item.Sexo)</td>
-                <td class="text-center">@Html.Raw(item.Emprestimoes.Count > 0 ? item.Emprestimoes.Count : "")</td>
-                <td class="text-end">
-                    <a class="btn btn-sm btn-default" href="@Url.Action("Edit", new { id = item.Id })"><i class="fa fa-pencil"></i></a>
-                    <a class="btn btn-sm btn-default" href="@Url.Action("Details", new { id = item.Id })"><i class="fa fa-eye"></i></a>
-                    @if (item.Emprestimoes.Count == 0)
+                <td>@Html.DisplayFor(modelItem => item.Titulo)</td>
+                <td>@Html.DisplayFor(modelItem => item.AnoPublicacao)</td>
+                <td>@Html.DisplayFor(modelItem => item.AnoEdicao)</td>
+                <td>
+                    @foreach (var autor in item.LivroAutors.OrderBy(x => x.OrdemAutoria))
                     {
-                        <a class="btn btn-sm btn-default" href="@Url.Action("Delete", new { id = item.Id })"><i class="fa fa-trash-o"></i></a>
+                        <i class="fa fa-user-o" title="@autor.Autor.Nome"></i>
                     }
-                    else
+            </td>
+                <td>
+                    @foreach (var cat in item.Categorias.OrderBy(x => x.Nome))
                     {
-                        <span class="btn btn-sm btn-default" title="Utilizador associado com livros.&#10;Não pode ser apagado."><i class="fa fa-times text-danger"></i></span>
+                        <i class="fa fa-bookmark-o" title="@cat.Nome"></i>
                     }
                 </td>
-            </tr>
-        }
+            <td>@Html.DisplayFor(modelItem => item.Editora.Nome)</td>
+            <td class="text-end">
+                <a class="btn btn-sm btn-default" href="@Url.Action("Edit", new { id = item.Id })"><i class="fa fa-pencil"></i></a>
+                <a class="btn btn-sm btn-default" href="@Url.Action("Details", new { id = item.Id })"><i class="fa fa-eye"></i></a>
+                @if (item.LivroAutors.Count == 0 && item.EmprestimoLivroes.Count == 0)
+                {
+                    <a class="btn btn-sm btn-default" href="@Url.Action("Delete", new { id = item.Id })"><i class="fa fa-trash-o"></i></a>
+                }
+                else
+                {
+                    <span class="btn btn-sm btn-default" title="Livro associado com Autores/Empréstimos.&#10;Não pode ser apagada."><i class="fa fa-times text-danger"></i></span>
+                }
+            </td>
+        </tr>
+    }
 
     </table>
     <p class="small"><i class="fa fa-clock-o"></i> @ViewBag.ElapsedMilliseconds.ToString("N0") ms</p>

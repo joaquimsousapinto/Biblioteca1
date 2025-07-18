@@ -1,5 +1,7 @@
 ﻿using Biblioteca1.Models;
 using PagedList;
+using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.Entity;
@@ -7,33 +9,34 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Mvc;
 
 namespace Biblioteca1.Controllers
 {
-    public class AutoresController : Controller
+    public class LivrosController : Controller
     {
         private readonly Biblioteca1Entities db = new Biblioteca1Entities();
 
-        // GET: autores
+        // GET: Livros
         public ActionResult Index(int? page, string q)
         {
             Stopwatch stopwatch = Stopwatch.StartNew();
 
             int pageSize = short.Parse(ConfigurationManager.AppSettings["ItemsPorPagina"]);
             int pageNumber = page ?? 1;
-            IPagedList<Autor> retVal = null;
+            IPagedList<Livro> retVal = null;
             if (!string.IsNullOrEmpty(q))
             {
-                retVal = db.Autors.AsNoTracking()
-                    .Where(x => x.Nome.Contains(q))
-                    .OrderBy(x => x.Nome)
+                retVal = db.Livroes.AsNoTracking()
+                    .Where(x => x.Titulo.Contains(q))
+                    .OrderBy(x => x.Titulo)
                     .ToPagedList(pageNumber, pageSize);
             }
             else
             {
-                retVal = db.Autors.AsNoTracking()
-                    .OrderBy(x => x.Nome)
+                retVal = db.Livroes.AsNoTracking()
+                    .OrderBy(x => x.Titulo)
                     .ToPagedList(pageNumber, pageSize);
             }
             stopwatch.Stop();
@@ -42,142 +45,116 @@ namespace Biblioteca1.Controllers
             return View(retVal);
         }
 
-        // GET: autores/Details/5
+        // GET: Livros/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Autor autor = db.Autors.AsNoTracking().FirstOrDefault(x => x.Id == id);
-            if (autor == null)
+            Livro livro = db.Livroes.AsNoTracking().FirstOrDefault(x => x.Id == id);
+            if (livro == null)
             {
                 return HttpNotFound();
             }
-            return View(autor);
+            List<int> livroAutores = db.LivroAutors.Where(x => x.LivroId == id).Select(x => x.AutorId).ToList();
+            List<int> categorias = livro.Categorias.Select(x => x.Id).ToList();
+            ViewBag.Autores = new SelectList(db.Autors.Where(a => !livroAutores.Contains(a.Id)).OrderBy(x => x.Nome).ToList(), "Id", "Nome");
+            ViewBag.Categorias = new SelectList(db.Categorias.Where(a => !categorias.Contains(a.Id)).OrderBy(x => x.Nome).ToList(), "Id", "Nome");
+            return View(livro);
         }
 
-        // GET: autores/Create
+        // GET: Livros/Create
         public ActionResult Create()
         {
+            ViewBag.EditoraId = new SelectList(db.Editoras.OrderBy(x => x.Nome), "Id", "Nome");
             return View();
         }
 
-        // POST: autores/Create
+        // POST: Livros/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Nome,Morada,Telefone,Email,DataNascimento,Sexo")] Autor autor)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Titulo,AnoPublicacao,EditoraId,AnoEdicao,Exemplares")] Livro livro)
         {
             if (ModelState.IsValid)
             {
-                db.Autors.Add(autor);
+                db.Livroes.Add(livro);
                 await db.SaveChangesAsync();
                 TempData["Success"] = "Registo criado com sucesso.";
                 return RedirectToAction("Index");
             }
             TempData["Fail"] = "Erro na criação do Registo.";
-            return View(autor);
+            ViewBag.EditoraId = new SelectList(db.Editoras.OrderBy(x => x.Nome), "Id", "Nome", livro.EditoraId);
+            return View(livro);
         }
 
-        // GET: autores/Edit/5
+        // GET: Livros/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Autor autor = db.Autors.AsNoTracking().FirstOrDefault(x => x.Id == id);
-            if (autor == null)
+            Livro livro = db.Livroes.AsNoTracking().FirstOrDefault(x => x.Id == id);
+            if (livro == null)
             {
                 return HttpNotFound();
             }
-            return View(autor);
+            ViewBag.EditoraId = new SelectList(db.Editoras.OrderBy(x => x.Nome), "Id", "Nome", livro.EditoraId);
+            return View(livro);
         }
 
-        // POST: autores/Edit/5
+        // POST: Livros/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Nome,Morada,Telefone,Email,DataNascimento,Sexo")] Autor autor)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Titulo,AnoPublicacao,EditoraId,AnoEdicao,Exemplares")] Livro livro)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(autor).State = EntityState.Modified;
+                db.Entry(livro).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 TempData["Success"] = "Registo editado com sucesso.";
                 return RedirectToAction(nameof(Index));
             }
             TempData["Fail"] = "Erro na edição do registo.";
-            return View(autor);
+            ViewBag.EditoraId = new SelectList(db.Editoras, "Id", "Nome", livro.EditoraId);
+            return View(livro);
         }
 
-        // GET: autores/Delete/5
+        // GET: Livros/Delete/5
         public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Autor autor = db.Autors.AsNoTracking().FirstOrDefault(x => x.Id == id);
-            if (autor == null)
+            Livro livro = db.Livroes.AsNoTracking().FirstOrDefault(x => x.Id == id);
+            if (livro == null)
             {
                 return HttpNotFound();
             }
-            return View(autor);
+            return View(livro);
         }
 
-        // POST: autores/Delete/5
+        // POST: Livros/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Autor autor = await db.Autors.FindAsync(id);
-            if (autor != null)
+            Livro livro = db.Livroes.Find(id);
+            if (livro != null)
             {
-                db.Autors.Remove(autor);
+                db.Livroes.Remove(livro);
                 await db.SaveChangesAsync();
                 TempData["Success"] = "Registo apagado com sucesso.";
                 return RedirectToAction(nameof(Index));
             }
             TempData["Fail"] = "Erro a apagar o registo.";
             return RedirectToAction("Index");
-        }
-
-        [ActionName("CreateOnLivro")]
-        public async Task<ActionResult> CreateOnLivro(int livroId, int autorId, int ordemAutoria)
-        {
-            Autor autor = await db.Autors.FindAsync(autorId);
-            Livro livro = await db.Livroes.FindAsync(livroId);
-            if (autor != null & livro != null)
-            {
-                LivroAutor livroAutor = new LivroAutor()
-                {
-                    AutorId = autorId,
-                    LivroId = livroId,
-                    OrdemAutoria = ordemAutoria
-                };
-                autor.LivroAutors.Add(livroAutor);
-                await db.SaveChangesAsync();
-                TempData["Success"] = "Registo criado com sucesso.";
-            }
-            return RedirectToAction(nameof(Details), "Livros", new { id = livroId });
-        }
-
-        [ActionName("DeleteOnLivro")]
-        public async Task<ActionResult> DeleteOnLivro(int livroId, int autorId)
-        {
-            Autor autor = await db.Autors.FindAsync(autorId);
-            LivroAutor livroAutor = autor.LivroAutors.FirstOrDefault(x => x.LivroId == livroId);
-            if (livroAutor != null)
-            {
-                db.LivroAutors.Remove(livroAutor);
-                await db.SaveChangesAsync();
-                TempData["Success"] = "Registo apagado com sucesso.";
-            }
-            return RedirectToAction(nameof(Details), "Livros", new { id = livroId });
         }
     }
 }

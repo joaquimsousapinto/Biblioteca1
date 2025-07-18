@@ -21,6 +21,10 @@ namespace Biblioteca1.Models
     public partial class EmprestimoEstado
     { }
 
+    [MetadataType(typeof(MetadataLivro))]
+    public partial class Livro
+    { }
+
     [MetadataType(typeof(MetadataUtilizador))]
     public partial class Utilizador
     { }

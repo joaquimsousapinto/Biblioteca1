@@ -1,0 +1,128 @@
+﻿@model Biblioteca1.Models.Livro
+@{
+    ViewBag.Title = "Livro - Detalhes";
+    int max =  Model.LivroAutors.Count > 0 ? Model.LivroAutors.Max(x => x.OrdemAutoria) + 1 : 1;
+}
+<div class="border-bottom mt-4 mb-2">
+    <h2><i class="fa fa-bookmark-o text-danger"></i> @ViewBag.Title</h2>
+</div>
+<dl>
+    <dt>@Html.DisplayNameFor(model => model.Titulo)</dt>
+    <dd>@Html.DisplayFor(model => model.Titulo)</dd>
+    <dt>@Html.DisplayNameFor(model => model.AnoPublicacao)</dt>
+    <dd>@Html.DisplayFor(model => model.AnoPublicacao)</dd>
+    <dt>@Html.DisplayNameFor(model => model.AnoEdicao)</dt>
+    <dd>@Html.DisplayFor(model => model.AnoEdicao)</dd>
+    <dt>@Html.DisplayNameFor(model => model.Exemplares)</dt>
+    <dd>@Html.DisplayFor(model => model.Exemplares)</dd>
+    <dt>@Html.DisplayNameFor(model => model.EditoraId)</dt>
+    <dd>@Html.DisplayFor(model => model.Editora.Nome)</dd>
+    <dt>@Html.DisplayNameFor(model => model.LivroAutors) <button type="button" class="btn btn-xs btn-default" data-bs-toggle="modal" data-bs-target="#addAutorModal"><i class="fa fa-plus"></i></button></dt>
+    <dd>
+        <div class="row row-cols-4 g-1 mt-1">
+            @foreach (var item in Model.LivroAutors.OrderBy(x => x.OrdemAutoria))
+            {
+                <div class="col">
+                    <div class="border rounded-2 p-1">
+                        <i class="fa fa-user-o"></i> @item.Autor.Nome
+                        <a href="@Url.Action("DeleteOnLivro", "Autores", new { livroId = item.LivroId, autorId = item.AutorId })" class="float-end icon-link" title="Remover autoria"><i class="btn-close"></i></a>
+                    </div>
+                </div>
+            }
+        </div>
+    </dd>
+    <dt>@Html.DisplayNameFor(model => model.Categorias) <button type="button" class="btn btn-xs btn-default" data-bs-toggle="modal" data-bs-target="#addCategoriaModal"><i class="fa fa-plus"></i></button></dt>
+    <dd>
+        <div class="row row-cols-4 g-1 mt-1">
+            @foreach (var item in Model.Categorias.OrderBy(x=>x.Nome))
+            {
+                <div class="col">
+                    <div class="border rounded-2 p-1">
+                        <i class="fa fa-bookmark-o"></i> @item.Nome
+                        <a href="@Url.Action("DeleteOnLivro", "Categorias", new { livroId = Model.Id, categoriaId = item.Id })" class="float-end icon-link" title="Remover autoria"><i class="btn-close"></i></a>
+                    </div>
+                </div>
+            }
+        </div>
+    </dd>
+</dl>
+<p>
+    <a href="@Url.Action("Edit", new { id = Model.Id })" class="btn btn-primary btn-sm" title="Editar"><i class="fa fa-pencil"></i> <small>Editar</small></a>
+    <a href="@Url.Action("Index")" class="btn btn-default btn-sm" title="Voltar à Lista"><i class="fa fa-list"></i> <small>Voltar à Lista</small></a>
+</p>
+<!-- Modal (addAutorModal) -->
+<div class="modal fade" id="addAutorModal" tabindex="-1" aria-labelledby="addAutorModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form action="@Url.Action("CreateOnLivro", "Autores")" novalidate="novalidate">
+                <input type="hidden" name="livroId" value="@Model.Id" />
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="addAutorModalLabel">Adicionar Autor</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-floating mb-1">
+                        <select class="form-select" id="autorId" name="autorId" data-val="true" data-val-required="Campo de preenchimento obrigatório.">
+                            <option value="">--- Seleciona um autor ---</option>
+                            @foreach (var item in ViewBag.Autores as SelectList)
+                            {
+                                <option value="@item.Value">@item.Text</option>
+                            }
+                        </select>
+                        <label for="modalAutor">Selecione um autor</label>
+                        <span class="text-danger" data-valmsg-for="autorId" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="form-floating">
+                        <input id="ordemAutoria" name="ordemAutoria" type="number" class="form-control" data-val="true" data-val-required="Campo de preenchimento obrigatório." value="@max" />
+                        <label for="ordemAutoria">Ordem do autor</label>
+                        <span class="text-danger" data-valmsg-for="ordemAutoria" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-sm" title="Guardar"><i class="fa fa-save"></i> <small>Guardar</small></button>
+                    <button type="button" class="btn btn-default btn-sm icon-link" data-bs-dismiss="modal"><i class="btn-close"></i> <small>Fechar</small></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Modal (addCategoriaModal) -->
+<div class="modal fade" id="addCategoriaModal" tabindex="-1" aria-labelledby="addCategoriaModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form action="@Url.Action("CreateOnLivro", "Categorias")" novalidate="novalidate">
+                <input type="hidden" name="livroId" value="@Model.Id" />
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="addCategoriaModalLabel">Adicionar Categoria</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-floating mb-1">
+                        <select class="form-select" id="categoriaId" name="categoriaId" data-val="true" data-val-required="Campo de preenchimento obrigatório.">
+                            <option value="">--- Seleciona uma categoria ---</option>
+                            @foreach (var item in ViewBag.Categorias as SelectList)
+                            {
+                                <option value="@item.Value">@item.Text</option>
+                            }
+                        </select>
+                        <label for="modalAutor">Selecione uma categoria</label>
+                        <span class="text-danger" data-valmsg-for="categoriaId" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-sm" title="Guardar"><i class="fa fa-save"></i> <small>Guardar</small></button>
+                    <button type="button" class="btn btn-default btn-sm icon-link" data-bs-dismiss="modal"><i class="btn-close"></i> <small>Fechar</small></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+@Html.Partial("_ToastStatus")
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+    <script>
+        $('document').ready(function () {
+            $(".toast").toast('show');
+        });
+    </script>
+}

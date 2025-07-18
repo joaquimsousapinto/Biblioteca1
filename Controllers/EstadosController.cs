@@ -14,7 +14,7 @@ namespace Biblioteca1.Controllers
         // GET: Estados
         public ActionResult Index()
         {
-            return View(db.EmprestimoEstadoes.AsNoTracking().ToList());
+            return View(db.EmprestimoEstadoes.AsNoTracking().OrderBy(x => x.Nome).ToList());
         }
 
         // GET: Estados/Details/5

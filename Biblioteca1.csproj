@@ -211,6 +211,7 @@
     <Compile Include="Controllers\EditorasController.cs" />
     <Compile Include="Controllers\EstadosController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LivrosController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\UtilizadoresController.cs" />
     <Compile Include="Global.asax.cs">
@@ -262,6 +263,7 @@
     <Compile Include="Models\Metadata\MetadataCategoria.cs" />
     <Compile Include="Models\Metadata\MetadataEditora.cs" />
     <Compile Include="Models\Metadata\MetadataEmprestimoEstado.cs" />
+    <Compile Include="Models\Metadata\MetadataLivro.cs" />
     <Compile Include="Models\Metadata\MetadataUtilizador.cs" />
     <Compile Include="Models\Metadata\PartialClasses.cs" />
     <Compile Include="Models\Utilizador.cs">
@@ -287,6 +289,11 @@
     <Content Include="Views\Autores\Details.cshtml" />
     <Content Include="Views\Autores\Edit.cshtml" />
     <Content Include="Views\Autores\Index.cshtml" />
+    <Content Include="Views\Livros\Create.cshtml" />
+    <Content Include="Views\Livros\Delete.cshtml" />
+    <Content Include="Views\Livros\Details.cshtml" />
+    <Content Include="Views\Livros\Edit.cshtml" />
+    <Content Include="Views\Livros\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />

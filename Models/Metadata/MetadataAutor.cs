@@ -25,7 +25,7 @@ namespace Biblioteca1.Models.Metadata
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public Nullable<System.DateTime> DataMorte { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        [Display(Name = "Livro(s)")]
         public virtual ICollection<LivroAutor> LivroAutors { get; set; }
     }
 }
