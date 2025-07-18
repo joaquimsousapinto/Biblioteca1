@@ -1,5 +1,4 @@
-﻿using Biblioteca1.Areas.HelpPage;
-using System.Net.Http.Headers;
+﻿using System.Net.Http.Headers;
 using System.Web.Http;
 using System.Web.Http.Cors;
 
@@ -20,14 +19,12 @@ namespace Biblioteca1
                 defaults: new { id = RouteParameter.Optional }
             );
             // --- Configuração para forçar a saída JSON ---
-
             // Remove o formatador XML padrão
             config.Formatters.Remove(config.Formatters.XmlFormatter);
 
             // Opcional: Se quiser garantir que o JSON seja o formatador padrão para todos os tipos de mídia.
             config.Formatters.JsonFormatter.SupportedMediaTypes.Add(new MediaTypeHeaderValue("text/html"));
             // Esta linha acima faz com que o navegador (que geralmente pede text/html) receba JSON.
-
             // --- Fim da configuração JSON ---
 
             // --- Configuração CORS ---
