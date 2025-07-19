@@ -77,5 +77,9 @@ O sistema tem como objetivo gerenciar o acervo bibliográfico de uma biblioteca 
 - :link: [DML (Data Definition Language)](DDL.sql "DDL")
 - :link: [DML (Data Manipulation Language)](DML.sql "DDL")
 
+### Estrutura SQL da Base de Dados
+![SQLStructure](Imagens/SQLStructure.png "Estrutura SQL da base de dados")
+
+ 
 ### Resultado do ORM 
-![DbContext](Imagens/DbContext.png "DbContext")
+![DbContext](Imagens/DbContext.png "Estrutura do DbContext criado pelo ORM")
