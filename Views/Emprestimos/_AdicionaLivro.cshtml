@@ -1,0 +1,36 @@
+﻿<!-- Modal (addLivroModal) -->
+<div class="modal fade" id="addLivroModal" tabindex="-1" aria-labelledby="addAutorModalLabel" aria-hidden="true" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <form action="@Url.Action("AddLivroOnEmprestimo")" novalidate="novalidate">
+                <input type="hidden" name="emprestimoId" value="@Model.Id" />
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="addAutorModalLabel">Adicionar Autor</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-floating mb-1">
+                        <select class="form-select" id="livroId" name="livroId" data-val="true" data-val-required="Campo de preenchimento obrigatório.">
+                            <option value="">--- Seleciona um livro ---</option>
+                            @foreach (var item in ViewBag.Livros as SelectList)
+                            {
+                                <option value="@item.Value">@item.Text</option>
+                            }
+                        </select>
+                        <label for="modalAutor">Selecione um livro</label>
+                        <span class="text-danger" data-valmsg-for="livroId" data-valmsg-replace="true"></span>
+                    </div>
+                    <div class="form-floating">
+                        <input id="quantidade" name="quantidade" type="number" class="form-control" data-val="true" data-val-required="Campo de preenchimento obrigatório." />
+                        <label for="quantidade">Quantidade a emprestar</label>
+                        <span class="text-danger" data-valmsg-for="quantidade" data-valmsg-replace="true"></span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary btn-sm" title="Guardar"><i class="fa fa-save"></i> <small>Guardar</small></button>
+                    <button type="button" class="btn btn-default btn-sm icon-link" data-bs-dismiss="modal"><i class="btn-close"></i> <small>Fechar</small></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

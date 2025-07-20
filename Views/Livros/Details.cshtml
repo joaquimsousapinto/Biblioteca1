@@ -25,7 +25,7 @@
                 <div class="col">
                     <div class="border rounded-2 p-1">
                         <i class="fa fa-user-o"></i> @item.Autor.Nome
-                        <a href="@Url.Action("DeleteOnLivro", "Autores", new { livroId = item.LivroId, autorId = item.AutorId })" class="float-end icon-link" title="Remover autoria"><i class="btn-close"></i></a>
+                        <a href="@Url.Action("DeleteAutorOnLivro", new { livroId = item.LivroId, autorId = item.AutorId })" class="float-end icon-link" title="Remover autoria"><i class="btn-close"></i></a>
                     </div>
                 </div>
             }
@@ -39,7 +39,7 @@
                 <div class="col">
                     <div class="border rounded-2 p-1">
                         <i class="fa fa-bookmark-o"></i> @item.Nome
-                        <a href="@Url.Action("DeleteOnLivro", "Categorias", new { livroId = Model.Id, categoriaId = item.Id })" class="float-end icon-link" title="Remover autoria"><i class="btn-close"></i></a>
+                        <a href="@Url.Action("DeleteCategoriaOnLivro", new { livroId = Model.Id, categoriaId = item.Id })" class="float-end icon-link" title="Remover autoria"><i class="btn-close"></i></a>
                     </div>
                 </div>
             }
@@ -54,7 +54,7 @@
 <div class="modal fade" id="addAutorModal" tabindex="-1" aria-labelledby="addAutorModalLabel" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <form action="@Url.Action("CreateOnLivro", "Autores")" novalidate="novalidate">
+            <form action="@Url.Action("CreateAutorOnLivro")" novalidate="novalidate">
                 <input type="hidden" name="livroId" value="@Model.Id" />
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="addAutorModalLabel">Adicionar Autor</h1>
@@ -90,7 +90,7 @@
 <div class="modal fade" id="addCategoriaModal" tabindex="-1" aria-labelledby="addCategoriaModalLabel" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <form action="@Url.Action("CreateOnLivro", "Categorias")" novalidate="novalidate">
+            <form action="@Url.Action("CreateCategoriaOnLivro")" novalidate="novalidate">
                 <input type="hidden" name="livroId" value="@Model.Id" />
                 <div class="modal-header">
                     <h1 class="modal-title fs-5" id="addCategoriaModalLabel">Adicionar Categoria</h1>

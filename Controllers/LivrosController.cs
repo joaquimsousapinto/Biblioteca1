@@ -1,6 +1,5 @@
 ﻿using Biblioteca1.Models;
 using PagedList;
-using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
@@ -9,7 +8,6 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
-using System.Web;
 using System.Web.Mvc;
 
 namespace Biblioteca1.Controllers
@@ -156,5 +154,72 @@ namespace Biblioteca1.Controllers
             TempData["Fail"] = "Erro a apagar o registo.";
             return RedirectToAction("Index");
         }
+
+        public async Task<ActionResult> CreateAutorOnLivro(int livroId, int autorId, int ordemAutoria)
+        {
+            Autor autor = await db.Autors.FindAsync(autorId);
+            Livro livro = await db.Livroes.FindAsync(livroId);
+            if (autor != null & livro != null)
+            {
+                LivroAutor livroAutor = new LivroAutor()
+                {
+                    AutorId = autorId,
+                    LivroId = livroId,
+                    OrdemAutoria = ordemAutoria
+                };
+                autor.LivroAutors.Add(livroAutor);
+                await db.SaveChangesAsync();
+                TempData["Success"] = "Registo criado com sucesso.";
+                return RedirectToAction(nameof(Details), new { id = livroId });
+            }
+            TempData["Fail"] = "Erro a criar registo.";
+            return RedirectToAction(nameof(Details), new { id = livroId });
+        }
+
+        public async Task<ActionResult> DeleteAutorOnLivro(int livroId, int autorId)
+        {
+            Autor autor = await db.Autors.FindAsync(autorId);
+            LivroAutor livroAutor = autor.LivroAutors.FirstOrDefault(x => x.LivroId == livroId);
+            if (livroAutor != null)
+            {
+                db.LivroAutors.Remove(livroAutor);
+                await db.SaveChangesAsync();
+                TempData["Success"] = "Registo apagado com sucesso.";
+                return RedirectToAction(nameof(Details), new { id = livroId });
+            }
+            TempData["Fail"] = "Erro a apagar registo.";
+            return RedirectToAction(nameof(Details), new { id = livroId });
+        }
+
+        public async Task<ActionResult> CreateCategoriaOnLivro(int livroId, int categoriaId)
+        {
+            Categoria categoria = db.Categorias.Find(categoriaId);
+            Livro livro = db.Livroes.Find(livroId);
+            if (categoria != null && livro != null)
+            {
+                categoria.Livroes.Add(livro);
+                await db.SaveChangesAsync();
+                TempData["Success"] = "Registo criado com sucesso.";
+                return RedirectToAction(nameof(Details), new { id = livroId });
+            }
+            TempData["Fail"] = "Erro a criar registo.";
+            return RedirectToAction(nameof(Details), new { id = livroId });
+        }
+
+        public async Task<ActionResult> DeleteCategoriaOnLivro(int livroId, int categoriaId)
+        {
+            Categoria categoria = db.Categorias.Find(categoriaId);
+            Livro livro = db.Livroes.Find(livroId);
+            if (categoria != null && livro != null)
+            {
+                categoria.Livroes.Remove(livro);
+                await db.SaveChangesAsync();
+                TempData["Success"] = "Registo apagado com sucesso.";
+                return RedirectToAction(nameof(Details), new { id = livroId });
+            }
+            TempData["Fail"] = "Erro a apagar registo.";
+            return RedirectToAction(nameof(Details), new { id = livroId });
+        }
+
     }
 }

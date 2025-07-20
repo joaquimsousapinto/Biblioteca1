@@ -41,5 +41,15 @@ namespace Biblioteca1.Models
         {
             return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<Utilizadores_Sexo_FaixaEtaria_Result>("Utilizadores_Sexo_FaixaEtaria", executionTime);
         }
+    
+        public virtual ObjectResult<SP_Utilizadores_Sexo_FaixaEtaria_Result> SP_Utilizadores_Sexo_FaixaEtaria(ObjectParameter executionTime)
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_Utilizadores_Sexo_FaixaEtaria_Result>("SP_Utilizadores_Sexo_FaixaEtaria", executionTime);
+        }
+    
+        public virtual ObjectResult<SP_Livros_Categoria_Result> SP_Livros_Categoria(ObjectParameter executionTime)
+        {
+            return ((IObjectContextAdapter)this).ObjectContext.ExecuteFunction<SP_Livros_Categoria_Result>("SP_Livros_Categoria", executionTime);
+        }
     }
 }

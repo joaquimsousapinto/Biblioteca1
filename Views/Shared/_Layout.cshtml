@@ -40,11 +40,11 @@
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-file-pdf-o text-danger"></i> <span class="d-none d-xl-inline">Relatórios</span></a>
+                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="fa fa-bar-chart-o text-danger"></i> <span class="d-none d-xl-inline">Estatísticas</span></a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Utilizadores por sexo e faixa etária</a></li>
-                            <li><a class="dropdown-item" href="#">Livros por categoria</a></li>
-                            <li><a class="dropdown-item" href="#">Estados dos empréstimos</a></li>
+                            <li><a class="dropdown-item" href="@Url.Action("Utilizadores", "Estatisticas")">Utilizadores por sexo e faixa etária</a></li>
+                            <li><a class="dropdown-item" href="@Url.Action("Categorias", "Estatisticas")">Livros por categorias</a></li>
+                            <li><a class="dropdown-item" href="@Url.Action("Emprestimos", "Estatisticas")">Estados dos empréstimos</a></li>
                         </ul>
                     </li>
                     <li class="nav-item d-none d-xl-inline">@Html.ActionLink("Sobre", "About", "Home", new { area = "" }, new { @class = "nav-link" })</li>

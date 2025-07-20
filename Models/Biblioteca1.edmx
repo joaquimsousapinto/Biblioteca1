@@ -10,7 +10,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Nome" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="256" Nullable="false" />
           <Property Name="Bibliografia" Type="varchar" MaxLength="1024" />
           <Property Name="DataNascimento" Type="date" />
           <Property Name="DataMorte" Type="date" />
@@ -20,7 +20,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" Nullable="false" />
-          <Property Name="Nome" Type="varchar" MaxLength="255" Nullable="false" />
+          <Property Name="Nome" Type="varchar" MaxLength="256" Nullable="false" />
           <Property Name="Descricao" Type="varchar" MaxLength="1024" />
         </EntityType>
         <EntityType Name="Editora">
@@ -98,6 +98,18 @@
           <Property Name="DataNascimento" Type="date" />
           <Property Name="Sexo" Type="char" MaxLength="1" Nullable="false" />
         </EntityType>
+        <Association Name="FK_Emprestimo_Utilizador">
+          <End Role="Utilizador" Type="Self.Utilizador" Multiplicity="1" />
+          <End Role="Emprestimo" Type="Self.Emprestimo" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Utilizador">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Emprestimo">
+              <PropertyRef Name="UtilizadorId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_EmprestimoEstado">
           <End Role="EmprestimoEstado" Type="Self.EmprestimoEstado" Multiplicity="1" />
           <End Role="Emprestimo" Type="Self.Emprestimo" Multiplicity="*" />
@@ -194,7 +206,10 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Function Name="Utilizadores_Sexo_FaixaEtaria" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+        <Function Name="SP_Livros_Categoria" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
+          <Parameter Name="ExecutionTime" Type="int" Mode="InOut" />
+        </Function>
+        <Function Name="SP_Utilizadores_Sexo_FaixaEtaria" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo">
           <Parameter Name="ExecutionTime" Type="int" Mode="InOut" />
         </Function>
         <EntityContainer Name="Biblioteca1ModelStoreContainer">
@@ -208,6 +223,10 @@
           <EntitySet Name="LivroAutor" EntityType="Self.LivroAutor" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LivroCategoria" EntityType="Self.LivroCategoria" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Utilizador" EntityType="Self.Utilizador" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Emprestimo_Utilizador" Association="Self.FK_Emprestimo_Utilizador">
+            <End Role="Utilizador" EntitySet="Utilizador" />
+            <End Role="Emprestimo" EntitySet="Emprestimo" />
+          </AssociationSet>
           <AssociationSet Name="FK_EmprestimoEstado" Association="Self.FK_EmprestimoEstado">
             <End Role="EmprestimoEstado" EntitySet="EmprestimoEstado" />
             <End Role="Emprestimo" EntitySet="Emprestimo" />
@@ -250,7 +269,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nome" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nome" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Bibliografia" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
           <Property Name="DataNascimento" Type="DateTime" Precision="0" />
           <Property Name="DataMorte" Type="DateTime" Precision="0" />
@@ -261,7 +280,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" />
-          <Property Name="Nome" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Nome" Type="String" MaxLength="256" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Descricao" Type="String" MaxLength="1024" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Livroes" Relationship="Self.LivroCategoria" FromRole="Categoria" ToRole="Livro" />
         </EntityType>
@@ -408,6 +427,12 @@
           <FunctionImport Name="Utilizadores_Sexo_FaixaEtaria" ReturnType="Collection(Biblioteca1Model.Utilizadores_Sexo_FaixaEtaria_Result)">
             <Parameter Name="ExecutionTime" Mode="InOut" Type="Int32" />
           </FunctionImport>
+          <FunctionImport Name="SP_Utilizadores_Sexo_FaixaEtaria" ReturnType="Collection(Biblioteca1Model.SP_Utilizadores_Sexo_FaixaEtaria_Result)">
+          <Parameter Name="ExecutionTime" Mode="InOut" Type="Int32" />
+          </FunctionImport>
+          <FunctionImport Name="SP_Livros_Categoria" ReturnType="Collection(Biblioteca1Model.SP_Livros_Categoria_Result)">
+            <Parameter Name="ExecutionTime" Mode="InOut" Type="Int32" />
+          </FunctionImport>
         </EntityContainer>
         <EntityType Name="EmprestimoEstado">
           <Key>
@@ -483,6 +508,15 @@
         <ComplexType Name="Utilizadores_Sexo_FaixaEtaria_Result">
           <Property Type="String" Name="Sexo" Nullable="false" MaxLength="1" />
           <Property Type="String" Name="FaixaEtaria" Nullable="false" MaxLength="5" />
+          <Property Type="Int32" Name="Total" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SP_Utilizadores_Sexo_FaixaEtaria_Result">
+          <Property Type="String" Name="Sexo" Nullable="false" MaxLength="1" />
+          <Property Type="String" Name="FaixaEtaria" Nullable="false" MaxLength="5" />
+          <Property Type="Int32" Name="Total" Nullable="true" />
+        </ComplexType>
+        <ComplexType Name="SP_Livros_Categoria_Result">
+          <Property Type="String" Name="Nome" Nullable="false" MaxLength="256" />
           <Property Type="Int32" Name="Total" Nullable="true" />
         </ComplexType>
       </Schema>
@@ -591,11 +625,19 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <FunctionImportMapping FunctionImportName="Utilizadores_Sexo_FaixaEtaria" FunctionName="Biblioteca1Model.Store.Utilizadores_Sexo_FaixaEtaria">
+          <FunctionImportMapping FunctionImportName="SP_Utilizadores_Sexo_FaixaEtaria" FunctionName="Biblioteca1Model.Store.SP_Utilizadores_Sexo_FaixaEtaria">
             <ResultMapping>
-              <ComplexTypeMapping TypeName="Biblioteca1Model.Utilizadores_Sexo_FaixaEtaria_Result">
+              <ComplexTypeMapping TypeName="Biblioteca1Model.SP_Utilizadores_Sexo_FaixaEtaria_Result">
                 <ScalarProperty Name="Sexo" ColumnName="Sexo" />
                 <ScalarProperty Name="FaixaEtaria" ColumnName="FaixaEtaria" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+          <FunctionImportMapping FunctionImportName="SP_Livros_Categoria" FunctionName="Biblioteca1Model.Store.SP_Livros_Categoria">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="Biblioteca1Model.SP_Livros_Categoria_Result">
+                <ScalarProperty Name="Nome" ColumnName="Nome" />
                 <ScalarProperty Name="Total" ColumnName="Total" />
               </ComplexTypeMapping>
             </ResultMapping>

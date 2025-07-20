@@ -168,6 +168,31 @@ BEGIN
 END
 GO
 
+-- =============================================
+-- Author:		Joaquim Sousa Pinto
+-- Create date: 2025-07-19
+-- Description:	Livros por Categoria
+-- =============================================
+CREATE PROCEDURE SP_Livros_Categoria 
+	-- Add the parameters for the stored procedure here
+	@ExecutionTime INT OUTPUT
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+    DECLARE @StartTime DATETIME = GETDATE();
+
+	SELECT Categoria.Nome, COUNT(*) As Total
+		FROM LivroCategoria
+		INNER JOIN Categoria ON LivroCategoria.CategoriaId = Categoria.Id
+		GROUP BY Categoria.Nome
+		ORDER BY Categoria.Nome
+
+    SET @ExecutionTime = DATEDIFF(MILLISECOND, @StartTime, GETDATE());
+END
+GO
+
 -- Índices para Chaves Estrangeiras (FKs):
 CREATE INDEX IX_Livro_EditoraId ON Livro (EditoraId);
 CREATE INDEX IX_LivroAutor_AutorId ON LivroAutor (AutorId);

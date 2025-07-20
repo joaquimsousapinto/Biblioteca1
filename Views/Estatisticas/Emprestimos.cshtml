@@ -1,0 +1,99 @@
+﻿@model DTO_Emprestimos
+@using Biblioteca1.Models.DTO;
+@{
+    ViewBag.Title = "Estatítica de Empréstimos";
+    List<DTO_EstadoDosLivros> estadoDosLivros = ViewBag.EstadoDosLivros as List<DTO_EstadoDosLivros>;
+}
+<div class="border-bottom pt-4 pb-2 mb-3">
+    <h2><i class="fa fa-pie-chart text-danger"></i> @ViewBag.Title</h2>
+</div>
+<div class="row row-cols-3 g-5">
+    <div class="col">
+        <div class="border rounded-1">
+            <h2 class="text-center">Empréstimos</h2>
+            <div id="emprestimos"></div>
+            <div class="display-4 text-center">@Model.Realizados().ToString("N0")</div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="border rounded-1">
+            <h2 class="text-center">Concluídos</h2>
+            <div id="concluidos"></div>
+            <div class="display-4 text-center">@Model.Concluidos().ToString("N0")</div>
+        </div>
+    </div>
+    <div class="col">
+        <div class="border rounded-1">
+            <h2 class="text-center">Em Curso</h2>
+            <div id="emCurso"></div>
+            <div class="display-4 text-center">@Model.EmCurso().ToString("N0")</div>
+        </div>
+    </div>
+</div>
+<div class="border-bottom pt-4 pb-2 mb-3">
+    <h2><i class="fa fa-pie-chart text-danger"></i> Estados dos livros</h2>
+</div>
+<div id="estados"></div>
+<p class="small"><i class="fa fa-clock-o"></i> @ViewBag.ElapsedMilliseconds.ToString("N0") ms</p>
+@section scripts{
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load("current", { packages: ["corechart","bar"] });
+        google.charts.setOnLoadCallback(drawPieCharts);
+        google.charts.setOnLoadCallback(drawBars);
+        function drawPieCharts() {
+            var data_emprestimos = google.visualization.arrayToDataTable([
+                ['Empréstimos', 'Total', { role: 'tooltip' }],
+                ['', @Model.Realizados() * 25 / 100, ''],
+                ['Concluídos', @Model.Concluidos() * 75 / 100, 'Concluídos: @Model.Concluidos()'],
+                ['Em Curso', @Model.EmCurso() * 75 / 100, 'Em Curso: @Model.EmCurso()']
+            ]);
+            var data_concluidos = google.visualization.arrayToDataTable([
+                ['Concluídos', 'Total', { role: 'tooltip' }],
+                ['', @Model.Concluidos() * 25 /100, ''],
+                ['No Prazo', @Model.ConcluidosNoPrazo * 75 /100, 'No Prazo: @Model.ConcluidosNoPrazo'],
+                ['Atrasados', @Model.ConcluidosAtrasados * 75 / 100, 'Atrasados: @Model.ConcluidosAtrasados']
+            ]);
+
+            var data_emCurso = google.visualization.arrayToDataTable([
+                ['Em Curso', 'Total', { role: 'tooltip' }],
+                ['', @Model.Concluidos() * 25 /100, ''],
+                ['No Prazo', @Model.EmCursoNoPrazo * 75 /100, 'No Prazo: @Model.EmCursoNoPrazo'],
+                ['Atrasados', @Model.EmCursoAtrasados * 75 / 100, 'Atrasados: @Model.EmCursoAtrasados']
+            ]);
+
+            var optionsPie = {
+                width: '100%',
+                height: '300',
+                fontName: 'Open Sans',
+                pieHole: 0.6, 'chartArea': { 'width': '90%', 'height': '100%' },
+                legend: 'none',
+                pieSliceText: 'none',
+                pieStartAngle: 135,
+                slices: { 0: { color: 'transparent' }, 1: { color: '#3366cc' }, 2: { color: '#dc3912' }, 3: { color: '#ff9900' }, 4: { color: '#109618' }, 5: { color: '#990099' }, 6: { color: '#0099c6' }, 7: { color: '#dd4477' }, 8: { color: '#66aa00' } }
+            };
+
+            var emprestimos = new google.visualization.PieChart(document.getElementById('emprestimos'));
+            emprestimos.draw(data_emprestimos, optionsPie);
+            var concluidos = new google.visualization.PieChart(document.getElementById('concluidos'));
+            concluidos.draw(data_concluidos, optionsPie);
+            var emCurso = new google.visualization.PieChart(document.getElementById('emCurso'));
+            emCurso.draw(data_emCurso, optionsPie);
+        }
+
+        function drawBars() {
+            var data = new google.visualization.arrayToDataTable([
+                ['Estado dos Livros', 'Exemplares'], @foreach (var item in estadoDosLivros) { @Html.Raw(string.Format("['{0}',{1}],", item.Estado, item.Total)) } ]);
+
+            var options = {
+                width: '100%',
+                height: '400',
+                fontName: 'Open Sans', 'chartArea': { 'width': '90%', 'height': '100%' },
+                legend: { position: 'none' }
+            };
+
+            var chart = new google.charts.Bar(document.getElementById('estados'));
+            chart.draw(data, options);
+        };
+    </script>
+}

@@ -145,39 +145,5 @@ namespace Biblioteca1.Controllers
             TempData["Fail"] = "Erro a apagar o registo.";
             return RedirectToAction("Index");
         }
-
-        [ActionName("CreateOnLivro")]
-        public async Task<ActionResult> CreateOnLivro(int livroId, int autorId, int ordemAutoria)
-        {
-            Autor autor = await db.Autors.FindAsync(autorId);
-            Livro livro = await db.Livroes.FindAsync(livroId);
-            if (autor != null & livro != null)
-            {
-                LivroAutor livroAutor = new LivroAutor()
-                {
-                    AutorId = autorId,
-                    LivroId = livroId,
-                    OrdemAutoria = ordemAutoria
-                };
-                autor.LivroAutors.Add(livroAutor);
-                await db.SaveChangesAsync();
-                TempData["Success"] = "Registo criado com sucesso.";
-            }
-            return RedirectToAction(nameof(Details), "Livros", new { id = livroId });
-        }
-
-        [ActionName("DeleteOnLivro")]
-        public async Task<ActionResult> DeleteOnLivro(int livroId, int autorId)
-        {
-            Autor autor = await db.Autors.FindAsync(autorId);
-            LivroAutor livroAutor = autor.LivroAutors.FirstOrDefault(x => x.LivroId == livroId);
-            if (livroAutor != null)
-            {
-                db.LivroAutors.Remove(livroAutor);
-                await db.SaveChangesAsync();
-                TempData["Success"] = "Registo apagado com sucesso.";
-            }
-            return RedirectToAction(nameof(Details), "Livros", new { id = livroId });
-        }
     }
 }

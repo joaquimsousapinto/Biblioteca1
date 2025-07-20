@@ -1,0 +1,83 @@
+﻿@model List<SP_Utilizadores_Sexo_FaixaEtaria_Result>
+@using Biblioteca1.Models
+@{
+    ViewBag.Title = "Estatítica de Utilizadores por Sexo e Faixa Etária";
+    string anterior = "";
+}
+
+<div class="border-bottom pt-4 pb-2 mb-3">
+    <h2><i class="fa fa-bar-chart-o text-danger"></i> @ViewBag.Title</h2>
+</div>
+<div class="row row-cols-3 g-1">
+    <div class="col">
+        <table class="table table-striped table-sm align-middle">
+            <thead>
+                <tr>
+                    <th>@Html.DisplayNameFor(model => model.First().FaixaEtaria)</th>
+                    <th class="text-center">@Html.DisplayNameFor(model => model.First().Sexo)</th>
+                    <th class="text-center">@Html.DisplayNameFor(model => model.First().Total)</th>
+                </tr>
+            </thead>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @if (item.FaixaEtaria != anterior)
+                        {
+                            anterior = item.FaixaEtaria;
+                            <i class="fa fa-bars"></i> @Html.DisplayFor(modelItem => item.FaixaEtaria)
+                        }
+                    </td>
+                    <td class="text-center">@Html.Raw(item.Sexo == "F" ? "Feminino" : "Masculino")</td>
+                    <td class="text-center">@Html.DisplayFor(modelItem => item.Total)</td>
+                </tr>
+            }
+        </table>
+    </div>
+    <div class="col">
+        <div id="donutchart1" style="width: 100%; height: 480px;" class="img-thumbnail"></div>
+    </div>
+    <div class="col">
+        <div id="donutchart2" style="width: 100%; height: 480px;" class="img-thumbnail"></div>
+    </div>
+</div>
+
+<p class="small"><i class="fa fa-clock-o"></i> @ViewBag.ElapsedMilliseconds.ToString("N0") | <i class="fa fa-cogs"></i> @ViewBag.ExecutionTime.ToString("N0") ms</p>
+@section Styles{
+}
+@section scripts{
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load("current", { packages: ["corechart"] });
+        google.charts.setOnLoadCallback(drawChart);
+        function drawChart() {
+            var data1 = google.visualization.arrayToDataTable([
+                ['Sexo', 'Total'],
+               @foreach (var item in Model.Select(x=>x.Sexo).Distinct().OrderBy(x=>x))
+                {
+                   @Html.Raw(string.Format("['{0}',{1}],\n", item=="F"? "Feminino": "Masculino", Model.Where(x => x.Sexo == item).Sum(x=>x.Total)));
+                }
+            ]);
+            var data2 = google.visualization.arrayToDataTable([
+                ['Faixa Etária', 'Total'],
+               @foreach (var item in Model.Select(x=>x.FaixaEtaria).Distinct())
+                {
+                   @Html.Raw(string.Format("['{0}',{1}],", item, Model.Where(x => x.FaixaEtaria == item).Sum(x=>x.Total)));
+                }
+            ]);
+
+            var options1 = {
+                title: 'Visualização por Sexo', titleTextStyle: { color: 'black', fontName: 'Open Sans', fontSize: '18' },
+                colors: ['pink', 'lightblue'],
+                pieHole: 0.4, legend: { position: 'bottom' }, 'chartArea': { 'width': '100%', 'height': '80%' }
+            };
+            var options2 = { title: 'Visualização por Faixa Etária', titleTextStyle: { color: 'black', fontName: 'Open Sans', fontSize: '18' }, pieHole: 0.4, legend: { position: 'bottom' }, 
+            'chartArea': { 'width': '100%', 'height': '80%' } };
+
+            var chart1 = new google.visualization.PieChart(document.getElementById('donutchart1'));
+            chart1.draw(data1, options1);
+            var chart2 = new google.visualization.PieChart(document.getElementById('donutchart2'));
+            chart2.draw(data2, options2);
+        }
+    </script>
+}

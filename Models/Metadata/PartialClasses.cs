@@ -17,6 +17,10 @@ namespace Biblioteca1.Models
     public partial class Editora
     { }
 
+    [MetadataType(typeof(MetadataEmprestimo))]
+    public partial class Emprestimo
+    { }
+
     [MetadataType(typeof(MetadataEmprestimoEstado))]
     public partial class EmprestimoEstado
     { }
@@ -27,5 +31,9 @@ namespace Biblioteca1.Models
 
     [MetadataType(typeof(MetadataUtilizador))]
     public partial class Utilizador
+    { }
+
+    [MetadataType(typeof(MetadataSP_Utilizadores_Sexo_FaixaEtaria_Result))]
+    public partial class SP_Utilizadores_Sexo_FaixaEtaria_Result
     { }
 }

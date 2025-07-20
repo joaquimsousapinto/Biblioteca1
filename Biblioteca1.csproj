@@ -244,7 +244,9 @@
     <Compile Include="Controllers\AutoresController.cs" />
     <Compile Include="Controllers\CategoriasController.cs" />
     <Compile Include="Controllers\EditorasController.cs" />
+    <Compile Include="Controllers\EmprestimosController.cs" />
     <Compile Include="Controllers\EstadosController.cs" />
+    <Compile Include="Controllers\EstatisticasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LivrosController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -274,6 +276,8 @@
     <Compile Include="Models\Categoria.cs">
       <DependentUpon>Biblioteca1.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\DTO\DTO_Emprestimos.cs" />
+    <Compile Include="Models\DTO\DTO_EstadoDosLivros.cs" />
     <Compile Include="Models\Editora.cs">
       <DependentUpon>Biblioteca1.tt</DependentUpon>
     </Compile>
@@ -297,10 +301,18 @@
     <Compile Include="Models\Metadata\MetadataAutor.cs" />
     <Compile Include="Models\Metadata\MetadataCategoria.cs" />
     <Compile Include="Models\Metadata\MetadataEditora.cs" />
+    <Compile Include="Models\Metadata\MetadataEmprestimo.cs" />
     <Compile Include="Models\Metadata\MetadataEmprestimoEstado.cs" />
     <Compile Include="Models\Metadata\MetadataLivro.cs" />
     <Compile Include="Models\Metadata\MetadataUtilizador.cs" />
+    <Compile Include="Models\Metadata\MetadataSP_Utilizadores_Sexo_FaixaEtaria_Result.cs" />
     <Compile Include="Models\Metadata\PartialClasses.cs" />
+    <Compile Include="Models\SP_Livros_Categoria_Result.cs">
+      <DependentUpon>Biblioteca1.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\SP_Utilizadores_Sexo_FaixaEtaria_Result.cs">
+      <DependentUpon>Biblioteca1.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Utilizador.cs">
       <DependentUpon>Biblioteca1.tt</DependentUpon>
     </Compile>
@@ -331,6 +343,15 @@
     <Content Include="Views\Livros\Details.cshtml" />
     <Content Include="Views\Livros\Edit.cshtml" />
     <Content Include="Views\Livros\Index.cshtml" />
+    <Content Include="Views\Estatisticas\Utilizadores.cshtml" />
+    <Content Include="Views\Estatisticas\Categorias.cshtml" />
+    <Content Include="Views\Estatisticas\Emprestimos.cshtml" />
+    <Content Include="Views\Emprestimos\Create.cshtml" />
+    <Content Include="Views\Emprestimos\Delete.cshtml" />
+    <Content Include="Views\Emprestimos\Details.cshtml" />
+    <Content Include="Views\Emprestimos\Edit.cshtml" />
+    <Content Include="Views\Emprestimos\Index.cshtml" />
+    <Content Include="Views\Emprestimos\_AdicionaLivro.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />
