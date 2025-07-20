@@ -78,11 +78,11 @@ O sistema tem como objetivo gerenciar o acervo bibliográfico de uma biblioteca 
 - :link: [DML (Data Manipulation Language)](DML.sql "DDL")
 
 ### Estrutura das tabelas da Base de Dados SQL
-![SQLStructure](Imagens/SQLStructure.png "Estrutura das tabelas da base de dados SQL")
+![SQLStructure](SqlStructure.png "Estrutura das tabelas da base de dados SQL")
 
  
 ### Estrutura das classes do DbContext criado pelo ORM 
-![DbContext](Imagens/DbContext.png "Estrutura das classes do DbContext criado pelo ORM")
+![DbContext](DbContext.png "Estrutura das classes do DbContext criado pelo ORM")
 > **Notas:** 
 >	1. As classes do DbContext foram geradas automaticamente a partir do modelo de dados definido no Entity Framework, refletindo as entidades e seus relacionamentos.
 >	1. A(s) Stored Procedure(s) são também importadas mas não aparecem no esquema do DBContext.
