@@ -3,15 +3,15 @@
 ## Análise de Requisitos para a criação de uma base de dados para uma Biblioteca Universitária
 
 ### Objetivo
-O sistema tem como objetivo gerenciar o acervo bibliográfico de uma biblioteca universitária, controlando:
+O sistema tem como objetivo gerir o acervo bibliográfico de uma biblioteca universitária, controlando:
 - Livros, autores, editoras e categorias
 - Empréstimos e utilizadores
-- Facilitação do acesso aos recursos pela comunidade académica
+- Ter estatísticas de gestão de livros e empréstimos
 
 ### Requisitos Funcionais
 
 #### 1. Gestão de Editoras
-- Registrar informações (nome, morada)
+- Registar informações (nome, morada)
 - Manter relação com livros publicados
 
 #### 2. Gestão de Categorias
@@ -23,29 +23,45 @@ O sistema tem como objetivo gerenciar o acervo bibliográfico de uma biblioteca 
 - Relacionar com editoras
 - Permitir múltiplos autores com ordem de autoria
 - Associar a múltiplas categorias
+- Controlar estados (disponível, emprestado, reservado)
+- Permitir pesquisa por título
+- Gerar relatórios de estatísticas (número de livros, categorias, autores)
 
 #### 4. Gestão de Autores
 - Registrar dados (nome, bibliografia, datas)
 - Relacionar com obras
+- Permitir múltiplos autores por livro
+- Controlar ordem de autoria
+- Permitir pesquisa por nome
 
 #### 5. Gestão de Utilizadores
 - Cadastrar dados pessoais e de contato
 - Controlar histórico de empréstimos
+- Gerir estados de utilizadores (ativo, inativo)
+- Permitir pesquisa por nome
 
 #### 6. Gestão de Empréstimos
 - Registrar operações (datas, estados)
 - Controlar devoluções
 - Gerenciar múltiplos itens por empréstimo
+- Manter histórico de empréstimos
+- Controlar estados (ativo, devolvido, atrasado)
+- Permitir pesquisa por utilizador
+
 
 ### Requisitos Não Funcionais
 
 | Categoria        | Especificação |
 |------------------|---------------|
+| Confiabilidade   | Alta disponibilidade e recuperação de falhas |
 | Desempenho       | Resposta em < 3 seg mesmo com grandes volumes de informação |
-| Segurança        | Proteção de dados de utilizadores de acordo com as normas legais |
-| Disponibilidade  | 24/7 com manutenção planeada |
-| Usabilidade      | Interface intuitiva |
+| Disponibilidade  | 24/7, com manutenção planeada |
+| Escalabilidade   | Suporte a crescimento de dados e utilizadores |
 | Integridade      | Validação e consistência de dados |
+| Manutenibilidade | Código modular e bem documentado |
+| Portabilidade    | Compatível com diferentes sistemas operacionais e navegadores |
+| Segurança        | Proteção de dados sensíveis  de acordo com as normas legais e autenticação de utilizadores |
+| Usabilidade      | Interface intuitiva e responsiva |
 
 ### Modelo Entidade-Relacionamento
 
