@@ -82,7 +82,7 @@ O sistema tem como objetivo gerenciar o acervo bibliográfico de uma biblioteca 
 
  
 ### Estrutura das classes do DbContext criado pelo ORM 
-![DbContext](DbContext.png "Estrutura das classes do DbContext criado pelo ORM")
+![DbContext](DBContext.png "Estrutura das classes do DbContext criado pelo ORM")
 > **Notas:** 
 >	1. As classes do DbContext foram geradas automaticamente a partir do modelo de dados definido no Entity Framework, refletindo as entidades e seus relacionamentos.
 >	1. A(s) Stored Procedure(s) são também importadas mas não aparecem no esquema do DBContext.
